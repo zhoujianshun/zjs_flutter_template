@@ -1,0 +1,152 @@
+{
+  "@@locale": "zh",
+  "@@last_modified": "2024-01-01T00:00:00.000Z",
+  "appName": "老年照护家庭版",
+  "@appName": {
+    "description": "应用名称"
+  },
+  "common_confirm": "确认",
+  "@common_confirm": {
+    "description": "确认按钮"
+  },
+  "common_cancel": "取消",
+  "@common_cancel": {
+    "description": "取消按钮"
+  },
+  "common_save": "保存",
+  "@common_save": {
+    "description": "保存按钮"
+  },
+  "common_delete": "删除",
+  "@common_delete": {
+    "description": "删除按钮"
+  },
+  "common_edit": "编辑",
+  "@common_edit": {
+    "description": "编辑按钮"
+  },
+  "common_loading": "加载中...",
+  "@common_loading": {
+    "description": "加载提示"
+  },
+  "common_retry": "重试",
+  "@common_retry": {
+    "description": "重试按钮"
+  },
+  "common_back": "返回",
+  "@common_back": {
+    "description": "返回按钮"
+  },
+  "common_next": "下一步",
+  "@common_next": {
+    "description": "下一步按钮"
+  },
+  "common_previous": "上一步",
+  "@common_previous": {
+    "description": "上一步按钮"
+  },
+  "common_search": "搜索",
+  "@common_search": {
+    "description": "搜索"
+  },
+  "common_settings": "设置",
+  "@common_settings": {
+    "description": "设置"
+  },
+  "error_network": "网络连接失败，请检查网络设置",
+  "@error_network": {
+    "description": "网络错误提示"
+  },
+  "error_unknown": "未知错误，请稍后重试",
+  "@error_unknown": {
+    "description": "未知错误提示"
+  },
+  "error_timeout": "请求超时，请稍后重试",
+  "@error_timeout": {
+    "description": "超时错误提示"
+  },
+  "auth_login": "登录",
+  "@auth_login": {
+    "description": "登录"
+  },
+  "auth_logout": "退出登录",
+  "@auth_logout": {
+    "description": "退出登录"
+  },
+  "auth_register": "注册",
+  "@auth_register": {
+    "description": "注册"
+  },
+  "auth_forgot_password": "忘记密码",
+  "@auth_forgot_password": {
+    "description": "忘记密码"
+  },
+  "auth_email": "邮箱",
+  "@auth_email": {
+    "description": "邮箱"
+  },
+  "auth_password": "密码",
+  "@auth_password": {
+    "description": "密码"
+  },
+  "auth_phone": "手机号",
+  "@auth_phone": {
+    "description": "手机号"
+  },
+  "auth_verification_code": "验证码",
+  "@auth_verification_code": {
+    "description": "验证码"
+  },
+  "home_title": "首页",
+  "@home_title": {
+    "description": "首页标题"
+  },
+  "profile_title": "个人中心",
+  "@profile_title": {
+    "description": "个人中心标题"
+  },
+  "profile_personal_info": "个人信息",
+  "@profile_personal_info": {
+    "description": "个人信息"
+  },
+  "profile_account_security": "账户安全",
+  "@profile_account_security": {
+    "description": "账户安全"
+  },
+  "profile_app_settings": "应用设置",
+  "@profile_app_settings": {
+    "description": "应用设置"
+  },
+  "profile_theme": "主题设置",
+  "@profile_theme": {
+    "description": "主题设置"
+  },
+  "profile_language": "语言设置",
+  "@profile_language": {
+    "description": "语言设置"
+  },
+  "settings_general": "通用设置",
+  "@settings_general": {
+    "description": "通用设置"
+  },
+  "settings_privacy": "隐私设置",
+  "@settings_privacy": {
+    "description": "隐私设置"
+  },
+  "settings_notification": "通知设置",
+  "@settings_notification": {
+    "description": "通知设置"
+  },
+  "theme_system": "跟随系统",
+  "@theme_system": {
+    "description": "跟随系统主题"
+  },
+  "theme_light": "浅色主题",
+  "@theme_light": {
+    "description": "浅色主题"
+  },
+  "theme_dark": "深色主题",
+  "@theme_dark": {
+    "description": "深色主题"
+  }
+}

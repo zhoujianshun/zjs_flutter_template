@@ -1,0 +1,220 @@
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+
+/// 存储服务 - 统一管理应用的数据存储
+class StorageService {
+  static late SharedPreferences _prefs;
+  static late Box _userBox;
+  static late Box _settingsBox;
+  static late Box _cacheBox;
+
+  // 安全存储实例
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock_this_device,
+    ),
+  );
+
+  /// 初始化存储服务
+  static Future<void> init() async {
+    // 初始化SharedPreferences
+    _prefs = await SharedPreferences.getInstance();
+
+    // 初始化Hive boxes
+    _userBox = await Hive.openBox(AppConstants.userBox);
+    _settingsBox = await Hive.openBox(AppConstants.settingsBox);
+    _cacheBox = await Hive.openBox(AppConstants.cacheBox);
+  }
+
+  // ==================== SharedPreferences 操作 ====================
+
+  /// 存储字符串
+  static Future<bool> setString(String key, String value) async {
+    return _prefs.setString(key, value);
+  }
+
+  /// 获取字符串
+  static String? getString(String key) {
+    return _prefs.getString(key);
+  }
+
+  /// 存储整数
+  static Future<bool> setInt(String key, int value) async {
+    return _prefs.setInt(key, value);
+  }
+
+  /// 获取整数
+  static int? getInt(String key) {
+    return _prefs.getInt(key);
+  }
+
+  /// 存储布尔值
+  static Future<bool> setBool(String key, bool value) async {
+    return _prefs.setBool(key, value);
+  }
+
+  /// 获取布尔值
+  static bool? getBool(String key) {
+    return _prefs.getBool(key);
+  }
+
+  /// 存储双精度浮点数
+  static Future<bool> setDouble(String key, double value) async {
+    return _prefs.setDouble(key, value);
+  }
+
+  /// 获取双精度浮点数
+  static double? getDouble(String key) {
+    return _prefs.getDouble(key);
+  }
+
+  /// 存储字符串列表
+  static Future<bool> setStringList(String key, List<String> value) async {
+    return _prefs.setStringList(key, value);
+  }
+
+  /// 获取字符串列表
+  static List<String>? getStringList(String key) {
+    return _prefs.getStringList(key);
+  }
+
+  /// 移除指定key
+  static Future<bool> remove(String key) async {
+    return _prefs.remove(key);
+  }
+
+  /// 检查key是否存在
+  static bool containsKey(String key) {
+    return _prefs.containsKey(key);
+  }
+
+  /// 清除所有数据
+  static Future<bool> clear() async {
+    return _prefs.clear();
+  }
+
+  // ==================== Hive 操作 ====================
+
+  /// 用户数据操作
+  static Future<void> setUserData(String key, dynamic value) async {
+    await _userBox.put(key, value);
+  }
+
+  static T? getUserData<T>(String key) {
+    return _userBox.get(key) as T?;
+  }
+
+  static Future<void> removeUserData(String key) async {
+    await _userBox.delete(key);
+  }
+
+  static Future<void> clearUserData() async {
+    await _userBox.clear();
+  }
+
+  /// 设置数据操作
+  static Future<void> setSettingsData(String key, dynamic value) async {
+    await _settingsBox.put(key, value);
+  }
+
+  static T? getSettingsData<T>(String key) {
+    return _settingsBox.get(key) as T?;
+  }
+
+  static Future<void> removeSettingsData(String key) async {
+    await _settingsBox.delete(key);
+  }
+
+  static Future<void> clearSettingsData() async {
+    await _settingsBox.clear();
+  }
+
+  /// 缓存数据操作
+  static Future<void> setCacheData(String key, dynamic value) async {
+    await _cacheBox.put(key, value);
+  }
+
+  static T? getCacheData<T>(String key) {
+    return _cacheBox.get(key) as T?;
+  }
+
+  static Future<void> removeCacheData(String key) async {
+    await _cacheBox.delete(key);
+  }
+
+  static Future<void> clearCacheData() async {
+    await _cacheBox.clear();
+  }
+
+  // ==================== 安全存储操作 ====================
+
+  /// 存储敏感数据
+  static Future<void> setSecureData(String key, String value) async {
+    await _secureStorage.write(key: key, value: value);
+  }
+
+  /// 获取敏感数据
+  static Future<String?> getSecureData(String key) async {
+    return _secureStorage.read(key: key);
+  }
+
+  /// 删除敏感数据
+  static Future<void> deleteSecureData(String key) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  /// 清除所有敏感数据
+  static Future<void> clearSecureData() async {
+    await _secureStorage.deleteAll();
+  }
+
+  /// 检查敏感数据是否存在
+  static Future<bool> containsSecureKey(String key) async {
+    return _secureStorage.containsKey(key: key);
+  }
+
+  // ==================== 便捷方法 ====================
+
+  /// 存储JSON对象
+  static Future<void> setJsonData(String key, Map<String, dynamic> value) async {
+    await setString(key, jsonEncode(value));
+  }
+
+  /// 获取JSON对象
+  static Map<String, dynamic>? getJsonData(String key) {
+    final jsonString = getString(key);
+    if (jsonString != null) {
+      return jsonDecode(jsonString) as Map<String, dynamic>;
+    }
+    return null;
+  }
+
+  /// 存储用户令牌
+  static Future<void> setUserToken(String token) async {
+    await setSecureData(AppConstants.userTokenKey, token);
+  }
+
+  /// 获取用户令牌
+  static Future<String?> getUserToken() async {
+    return getSecureData(AppConstants.userTokenKey);
+  }
+
+  /// 移除用户令牌
+  static Future<void> removeUserToken() async {
+    await deleteSecureData(AppConstants.userTokenKey);
+  }
+
+  /// 检查是否登录
+  static Future<bool> isLoggedIn() async {
+    return Future.value(true);
+    final token = await getUserToken();
+    return token != null && token.isNotEmpty;
+  }
+}

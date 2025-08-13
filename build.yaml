@@ -1,0 +1,35 @@
+# 代码生成配置
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # 生成 fromJson 和 toJson 方法
+          explicit_to_json: true
+          # 包含 null 值
+          include_if_null: false
+          # 字段重命名策略
+          field_rename: none
+          # 生成通用工厂构造函数
+          generic_argument_factories: true
+
+      hive_generator:
+        options:
+          # Hive 配置选项
+          auto_dispose: true
+
+# 全局选项
+global_options:
+  # 排除生成的文件
+  json_serializable:
+    options:
+      any_map: false
+      checked: true
+      create_factory: true
+      create_to_json: true
+      disallow_unrecognized_keys: false
+      explicit_to_json: true
+      field_rename: none
+      generic_argument_factories: false
+      ignore_unannotated: false
+      include_if_null: true
