@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:sky_eldercare_family/shared/widgets/language_switcher.dart';
 import 'package:sky_eldercare_family/shared/widgets/theme_switcher.dart';
 
 /// 个人中心页面
@@ -69,27 +69,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
-  /// 切换主题模式 (已迁移到ThemeSwitcher组件)
-  void _toggleThemeMode() {
-    ref.read(themeModeProvider.notifier).toggleThemeMode();
-  }
-
-  /// 获取主题模式显示文本 (已迁移到ThemeModeNotifier)
-  String _getThemeModeText(ThemeMode mode) {
-    return ref.read(themeModeProvider.notifier).getThemeModeDisplayName();
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.profile_title),
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: const [
+          LanguageSwitcherButton(),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -180,16 +172,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               title: l10n.profile_app_settings,
               items: [
                 _MenuItem(
-                  icon: Icons.language_outlined,
-                  title: l10n.profile_language,
-                  subtitle: '中文',
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('语言设置功能待开发')),
-                    );
-                  },
-                ),
-                _MenuItem(
                   icon: Icons.notifications_outlined,
                   title: l10n.settings_notification,
                   onTap: () {
@@ -200,7 +182,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ),
               ],
               customWidgets: [
-                // 使用新的主题切换组件
+                // 语言切换组件
+                const LanguageSwitcher(),
+                const SizedBox(height: 16),
+                // 主题切换组件
                 const ThemeSwitcher(),
               ],
             ),

@@ -148,5 +148,21 @@
   "theme_dark": "深色主题",
   "@theme_dark": {
     "description": "深色主题"
+  },
+  "language_chinese": "中文",
+  "@language_chinese": {
+    "description": "中文语言选项"
+  },
+  "language_english": "English",
+  "@language_english": {
+    "description": "英文语言选项"
+  },
+  "language_switch_title": "选择语言",
+  "@language_switch_title": {
+    "description": "语言切换标题"
+  },
+  "language_current": "当前语言",
+  "@language_current": {
+    "description": "当前语言"
   }
 }
