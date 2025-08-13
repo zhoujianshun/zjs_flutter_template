@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/examples/riverpod_examples.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 import 'package:sky_eldercare_family/shared/widgets/language_switcher.dart';
 import 'package:sky_eldercare_family/shared/widgets/theme_switcher.dart';
@@ -210,6 +211,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('关于我们功能待开发')),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.code,
+                  title: 'Riverpod示例',
+                  subtitle: '学习状态管理',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const RiverpodExamplesPage(),
+                      ),
                     );
                   },
                 ),
