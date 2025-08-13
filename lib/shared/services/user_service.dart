@@ -79,8 +79,8 @@ class UserServiceImpl implements UserService {
         final token = userData['token'] as String;
 
         // 保存用户token和信息
-        await StorageService.setUserToken(token);
-        await StorageService.setUserData('user_info', user.toJson());
+        await StorageService.instance.setUserToken(token);
+        await StorageService.instance.setUserData('user_info', user.toJson());
 
         return Right(user);
       } else {
@@ -122,8 +122,8 @@ class UserServiceImpl implements UserService {
         final token = userData['token'] as String;
 
         // 保存用户token和信息
-        await StorageService.setUserToken(token);
-        await StorageService.setUserData('user_info', user.toJson());
+        await StorageService.instance.setUserToken(token);
+        await StorageService.instance.setUserData('user_info', user.toJson());
 
         return Right(user);
       } else {
@@ -140,7 +140,7 @@ class UserServiceImpl implements UserService {
   Future<Either<Failure, User>> getCurrentUser() async {
     try {
       // 先从本地缓存获取
-      final cachedUserData = StorageService.getUserData<Map<String, dynamic>>('user_info');
+      final cachedUserData = StorageService.instance.getUserData<Map<String, dynamic>>('user_info');
       if (cachedUserData != null) {
         final user = User.fromJson(cachedUserData);
         return Right(user);
@@ -158,7 +158,7 @@ class UserServiceImpl implements UserService {
         final user = User.fromJson(apiResponse.data!);
 
         // 缓存用户信息
-        await StorageService.setUserData('user_info', user.toJson());
+        await StorageService.instance.setUserData('user_info', user.toJson());
 
         return Right(user);
       } else {
@@ -201,7 +201,7 @@ class UserServiceImpl implements UserService {
         final user = User.fromJson(apiResponse.data!);
 
         // 更新本地缓存
-        await StorageService.setUserData('user_info', user.toJson());
+        await StorageService.instance.setUserData('user_info', user.toJson());
 
         return Right(user);
       } else {
@@ -251,8 +251,8 @@ class UserServiceImpl implements UserService {
       await _apiClient.post('/auth/logout');
 
       // 清除本地数据
-      await StorageService.removeUserToken();
-      await StorageService.clearUserData();
+      await StorageService.instance.removeUserToken();
+      await StorageService.instance.clearUserData();
 
       return const Right(true);
     } on AppException catch (e) {
@@ -276,7 +276,7 @@ class UserServiceImpl implements UserService {
         final token = apiResponse.data!['token'] as String;
 
         // 保存新token
-        await StorageService.setUserToken(token);
+        await StorageService.instance.setUserToken(token);
 
         return Right(token);
       } else {

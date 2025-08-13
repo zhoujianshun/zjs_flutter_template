@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
-
-import '../../core/constants/app_constants.dart';
-import '../../core/storage/storage_service.dart';
-import '../../generated/l10n/app_localizations.dart';
+import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 
 /// 启动页面
 class SplashScreen extends ConsumerStatefulWidget {
@@ -15,8 +13,7 @@ class SplashScreen extends ConsumerStatefulWidget {
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -42,20 +39,24 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     );
 
     _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-    ));
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0, 0.6, curve: Curves.easeOut),
+      ),
+    );
 
     _scaleAnimation = Tween<double>(
       begin: 0.5,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.0, 0.6, curve: Curves.elasticOut),
-    ));
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0, 0.6, curve: Curves.elasticOut),
+      ),
+    );
 
     _animationController.forward();
   }
@@ -63,14 +64,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   /// 初始化应用
   Future<void> _initializeApp() async {
     await Future.delayed(AppConstants.splashDuration);
-    
+
     if (!mounted) return;
-    
+
     // 检查用户登录状态
-    final isLoggedIn = await StorageService.isLoggedIn();
-    
+    final isLoggedIn = await StorageService.instance.isLoggedIn();
+
     if (!mounted) return;
-    
+
     if (isLoggedIn) {
       context.go(AppConstants.homeRoute);
     } else {
@@ -81,7 +82,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
@@ -120,9 +121,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 );
               },
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // 应用名称
             AnimatedBuilder(
               animation: _fadeAnimation,
@@ -141,9 +142,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 );
               },
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // 版本信息
             AnimatedBuilder(
               animation: _fadeAnimation,
@@ -160,9 +161,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 );
               },
             ),
-            
+
             const SizedBox(height: 80),
-            
+
             // 加载指示器
             AnimatedBuilder(
               animation: _fadeAnimation,

@@ -1,13 +1,13 @@
 /// 抽象异常类
 abstract class AppException implements Exception {
-  final String message;
-  final int? code;
-  
   const AppException({
     required this.message,
     this.code,
   });
-  
+
+  final String message;
+  final int? code;
+
   @override
   String toString() => 'AppException(message: $message, code: $code)';
 }
@@ -18,6 +18,9 @@ class ServerException extends AppException {
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'ServerException(message: $message, code: $code)';
 }
 
 /// 网络异常
@@ -26,6 +29,9 @@ class NetworkException extends AppException {
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'NetworkException(message: $message, code: $code)';
 }
 
 /// 缓存异常
@@ -34,6 +40,9 @@ class CacheException extends AppException {
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'CacheException(message: $message, code: $code)';
 }
 
 /// 验证异常
@@ -44,12 +53,15 @@ class ValidationException extends AppException {
   });
 }
 
-/// 权限异常  
+/// 权限异常
 class PermissionException extends AppException {
   const PermissionException({
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'PermissionException(message: $message, code: $code)';
 }
 
 /// 认证异常
@@ -58,6 +70,9 @@ class AuthException extends AppException {
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'AuthException(message: $message, code: $code)';
 }
 
 /// 解析异常
@@ -66,4 +81,17 @@ class ParsingException extends AppException {
     required super.message,
     super.code,
   });
+
+  @override
+  String toString() => 'ParsingException(message: $message, code: $code)';
+}
+
+class StorageException extends AppException {
+  const StorageException({
+    required super.message,
+    super.code,
+  });
+
+  @override
+  String toString() => 'StorageException(message: $message, code: $code)';
 }

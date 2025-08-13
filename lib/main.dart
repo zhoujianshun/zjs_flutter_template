@@ -14,7 +14,7 @@ void main() async {
   await Hive.initFlutter();
 
   // 初始化存储服务
-  await StorageService.init();
+  await StorageService.instance.initialize();
 
   runApp(
     const ProviderScope(

@@ -27,7 +27,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   /// 加载用户信息
   Future<void> _loadUserInfo() async {
-    final email = StorageService.getUserData<String>('user_email');
+    final email = StorageService.instance.getUserData<String>('user_email');
     if (email != null) {
       setState(() {
         _userEmail = email;
@@ -39,8 +39,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Future<void> _handleLogout() async {
     final confirmed = await _showLogoutDialog();
     if (confirmed == true) {
-      await StorageService.removeUserToken();
-      await StorageService.clearUserData();
+      await StorageService.instance.removeUserToken();
+      await StorageService.instance.clearUserData();
 
       if (!mounted) return;
       context.go(AppConstants.loginRoute);

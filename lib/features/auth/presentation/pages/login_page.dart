@@ -45,10 +45,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       await Future.delayed(const Duration(seconds: 2), () {});
 
       // 保存用户token (模拟)
-      await StorageService.setUserToken('mock_user_token_12345');
+      await StorageService.instance.setUserToken('mock_user_token_12345');
 
       // 保存用户信息 (模拟)
-      await StorageService.setUserData('user_email', _emailController.text);
+      await StorageService.instance.setUserData('user_email', _emailController.text);
 
       if (!mounted) return;
 

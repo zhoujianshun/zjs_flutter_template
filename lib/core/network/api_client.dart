@@ -38,7 +38,7 @@ class ApiClient {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           // 添加认证token
-          final token = await StorageService.getUserToken();
+          final token = await StorageService.instance.getUserToken();
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
@@ -69,8 +69,8 @@ class ApiClient {
 
   /// 处理未授权错误
   Future<void> _handleUnauthorized() async {
-    await StorageService.removeUserToken();
-    await StorageService.clearUserData();
+    await StorageService.instance.removeUserToken();
+    await StorageService.instance.clearUserData();
     // 这里可以添加跳转到登录页面的逻辑
   }
 

@@ -30,7 +30,7 @@ class AppRouter {
     final location = state.uri.toString();
 
     // 检查用户登录状态
-    final isLoggedIn = await StorageService.isLoggedIn();
+    final isLoggedIn = await StorageService.instance.isLoggedIn();
 
     // 如果在启动页，不需要重定向
     if (location == AppConstants.splashRoute) {

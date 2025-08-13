@@ -270,10 +270,12 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
     _loadThemeMode();
   }
 
+  static const String themeKey = 'theme_mode';
+
   /// 从本地存储加载主题模式
   Future<void> _loadThemeMode() async {
     try {
-      final savedTheme = StorageService.getString('theme_mode');
+      final savedTheme = StorageService.instance.prefs.getString(themeKey);
       if (savedTheme != null) {
         switch (savedTheme) {
           case 'light':
@@ -324,7 +326,7 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
         default:
           modeString = 'system';
       }
-      await StorageService.setString('theme_mode', modeString);
+      await StorageService.instance.prefs.setString(themeKey, modeString);
     } catch (e) {
       // 保存失败时的错误处理
       debugPrint('Failed to save theme mode: $e');
