@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/core/network/interceptors/auth_interceptor.dart';
 
 /// API客户端 - 统一网络请求管理
 class ApiClient {
@@ -13,6 +13,8 @@ class ApiClient {
   }
 
   late final Dio _dio;
+
+  Dio get dio => _dio;
 
   /// 配置Dio实例
   void _setupDio() {
@@ -35,25 +37,7 @@ class ApiClient {
   void _setupInterceptors() {
     // 请求拦截器 - 添加认证token
     _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          // 添加认证token
-          final token = await StorageService.instance.getUserToken();
-          if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $token';
-          }
-
-          handler.next(options);
-        },
-        onError: (error, handler) async {
-          // 处理401未授权错误
-          if (error.response?.statusCode == 401) {
-            await _handleUnauthorized();
-          }
-
-          handler.next(error);
-        },
-      ),
+      AuthInterceptor(),
     );
 
     // 日志拦截器 - 仅在debug模式下使用
@@ -65,13 +49,59 @@ class ApiClient {
         ),
       );
     }
+
+    // dio缓存
+    // _setupCacheInterceptor();
+    // _storeInterceptorsForRetry()
   }
 
-  /// 处理未授权错误
-  Future<void> _handleUnauthorized() async {
-    await StorageService.instance.removeUserToken();
-    await StorageService.instance.clearUserData();
-    // 这里可以添加跳转到登录页面的逻辑
+  /// 存储拦截器引用供重试使用
+  // void _storeInterceptorsForRetry() {
+  //   // 为每个请求存储Dio实例引用，供重试时使用
+  //   _dio.interceptors.add(
+  //     InterceptorsWrapper(
+  //       onRequest: (options, handler) {
+  //         options.extra['dio_instance'] = _dio;
+  //         options.extra['original_interceptors'] = _dio.interceptors;
+  //         handler.next(options);
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // dio_cache_interceptor: ^3.5.0
+  // dio_cache_interceptor_hive_store: ^3.2.2
+  // Future<void> _setupCacheInterceptor() async {
+  //   try {
+  //     final cacheStore = HiveCacheStore(null);
+  //     final cacheOptions = CacheOptions(
+  //       store: cacheStore,
+  //       policy: CachePolicy.request,
+  //       hitCacheOnErrorExcept: [401, 403],
+  //       maxStale: const Duration(days: 7),
+  //       priority: CachePriority.normal,
+  //       cipher: null,
+  //       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
+  //       allowPostMethod: false,
+  //     );
+
+  //     _dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
+  //   } catch (e) {
+  //     AppLogger.error('Failed to setup cache interceptor: $e');
+  //   }
+  // }
+
+  /// Create a new instance with custom options
+  static ApiClient withOptions(BaseOptions options) {
+    final client = ApiClient();
+    client._dio.options = client._dio.options.copyWith(
+      baseUrl: options.baseUrl ?? client._dio.options.baseUrl,
+      connectTimeout: options.connectTimeout ?? client._dio.options.connectTimeout,
+      receiveTimeout: options.receiveTimeout ?? client._dio.options.receiveTimeout,
+      sendTimeout: options.sendTimeout ?? client._dio.options.sendTimeout,
+      headers: {...client._dio.options.headers, ...options.headers},
+    );
+    return client;
   }
 
   /// GET请求
@@ -90,7 +120,7 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
 
@@ -112,7 +142,7 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
 
@@ -134,7 +164,7 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
 
@@ -156,7 +186,7 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
 
@@ -187,7 +217,7 @@ class ApiClient {
 
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
 
@@ -207,12 +237,15 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      throw DioErrorHandler.handleDioError(e);
     }
   }
+}
 
+/// Dio错误处理
+class DioErrorHandler {
   /// 处理Dio错误
-  AppException _handleDioError(DioException error) {
+  static AppException handleDioError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
@@ -244,6 +277,7 @@ class ApiClient {
         );
 
       case DioExceptionType.unknown:
+      // ignore: no_default_cases, unreachable_switch_default
       default:
         return NetworkException(
           message: '未知网络错误: ${error.message}',
@@ -253,7 +287,7 @@ class ApiClient {
   }
 
   /// 处理响应错误
-  AppException _handleResponseError(DioException error) {
+  static AppException _handleResponseError(DioException error) {
     final statusCode = error.response?.statusCode;
     final message = _getErrorMessage(error.response?.data);
 
@@ -311,7 +345,7 @@ class ApiClient {
   }
 
   /// 从响应数据中提取错误信息
-  String? _getErrorMessage(dynamic data) {
+  static String? _getErrorMessage(dynamic data) {
     if (data is Map<String, dynamic>) {
       return data['message']?.toString() ?? data['error']?.toString() ?? data['msg']?.toString();
     }
