@@ -12,8 +12,7 @@ class AppConstants {
   static const Duration receiveTimeout = Duration(seconds: 30);
 
   // 存储Keys
-  static const String userTokenKey = 'user_token';
-  static const String userInfoKey = 'user_info';
+
   // static const String themeKey = 'theme_mode';
   // static const String languageKey = 'language_code';
 
@@ -21,12 +20,6 @@ class AppConstants {
   static const String userBox = 'user_box';
   static const String settingsBox = 'settings_box';
   static const String cacheBox = 'cache_box';
-
-  // 路由常量
-  static const String splashRoute = '/';
-  static const String loginRoute = '/login';
-  static const String homeRoute = '/home';
-  static const String profileRoute = '/profile';
 
   // 动画时长
   static const Duration animationDuration = Duration(milliseconds: 300);

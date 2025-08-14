@@ -18,7 +18,7 @@
 
 ### 核心目录说明
 
-```
+```text
 lib/
 ├── core/                    # 核心基础设施
 │   ├── constants/          # 应用常量定义
@@ -32,7 +32,12 @@ lib/
 │   │       ├── pages/     # 页面
 │   │       └── widgets/   # 组件
 │   ├── home/              # 首页模块
-│   └── profile/           # 个人中心模块
+│   ├── profile/           # 个人中心模块
+│   ├── settings/          # 设置模块
+│   │   └── presentation/  # UI层
+│   │       └── pages/     # 设置页面
+│   ├── onboarding/        # 引导页模块
+│   └── app_shell.dart     # 应用外壳（底部导航）
 ├── shared/                # 共享组件和服务
 │   ├── widgets/           # 通用UI组件
 │   ├── models/            # 数据模型
@@ -95,7 +100,7 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 
 ### 2. 目录组织
 
-```
+```text
 feature_name/
 ├── data/                  # 数据层（如果需要）
 │   ├── models/           # 数据模型
@@ -189,39 +194,278 @@ class MyWidget extends ConsumerWidget {
 
 ## 路由导航
 
-项目使用 GoRouter 进行路由管理：
+项目使用 GoRouter 进行路由管理，支持嵌套路由、路由守卫和自定义转场动画。
 
-### 1. 路由定义
+### 1. 路由架构
 
 ```dart
-final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => HomePage(),
-    ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => ProfilePage(),
-    ),
-  ],
-);
+AppRouter.createRouter()
+├── 启动页 (/splash)
+├── 引导页 (/onboarding)
+├── 登录页 (/login)
+├── 语言设置 (/language-settings)
+└── 底部导航 (StatefulShellRoute)
+    ├── 首页 (/)
+    ├── 个人中心 (/profile)
+    │   └── 主题设置 (/profile/theme-settings)  // 嵌套路由
+    └── 其他标签页...
 ```
 
-### 2. 路由跳转
+### 2. 路由定义
+
+```dart
+// 简单路由
+GoRoute(
+  path: RoutePaths.login,
+  name: 'login',
+  builder: (context, state) => const LoginPage(),
+),
+
+// 带自定义转场的路由
+GoRoute(
+  path: RoutePaths.splash,
+  name: 'splash',
+  pageBuilder: (context, state) => _buildPageWithTransition(
+    context,
+    state,
+    const SplashScreen(),
+    transitionType: RouteTransitionType.fade,
+  ),
+),
+
+// 嵌套路由
+GoRoute(
+  path: RoutePaths.profile,
+  name: 'profile',
+  builder: (context, state) => const ProfilePage(),
+  routes: [
+    GoRoute(
+      path: RoutePaths.getSubPath(RoutePaths.themeSettings, RoutePaths.profile),
+      name: 'themeSettings',
+      builder: (context, state) => const ThemeSettingsPage(),
+    ),
+  ],
+),
+
+// 底部导航（StatefulShellRoute）
+StatefulShellRoute.indexedStack(
+  builder: (context, state, navigationShell) {
+    return AppShell(navigationShell: navigationShell);
+  },
+  branches: [
+    StatefulShellBranch(
+      routes: [
+        GoRoute(
+          path: RoutePaths.home,
+          name: 'home',
+          builder: (context, state) => const HomePage(),
+        ),
+      ],
+    ),
+  ],
+),
+```
+
+### 3. 路由跳转
 
 ```dart
 // 跳转到指定路由
 context.go('/profile');
+context.go(RoutePaths.profile);
 
 // 推送新路由
 context.push('/settings');
+context.push(RoutePaths.languageSettings);
 
 // 返回上一页
 context.pop();
 
 // 替换当前路由
 context.pushReplacement('/login');
+context.pushReplacement(RoutePaths.login);
+
+// 嵌套路由跳转
+context.go('/profile/theme-settings');
+
+// 带参数的路由跳转
+context.go('/user/123');
+context.goNamed('user', pathParameters: {'id': '123'});
+```
+
+### 4. 路由守卫
+
+```dart
+// 在GoRouter中配置重定向
+GoRouter(
+  redirect: RouteGuards.authRedirect,
+  routes: [...],
+);
+
+// 路由守卫实现
+class RouteGuards {
+  static String? authRedirect(BuildContext context, GoRouterState state) {
+    // 检查用户是否已登录
+    final isLoggedIn = /* 检查登录状态 */;
+    final isAuthRoute = state.uri.toString().startsWith('/auth');
+    
+    if (!isLoggedIn && !isAuthRoute) {
+      return RoutePaths.login;
+    }
+    
+    if (isLoggedIn && isAuthRoute) {
+      return RoutePaths.home;
+    }
+    
+    return null; // 无需重定向
+  }
+}
+```
+
+### 5. 自定义转场动画
+
+```dart
+// 支持的转场类型
+enum RouteTransitionType {
+  slide,        // 滑动（默认）
+  fade,         // 淡入淡出
+  scale,        // 缩放
+  bottomSheet,  // 底部弹出
+}
+
+// 使用自定义转场
+GoRoute(
+  path: '/settings',
+  pageBuilder: (context, state) => _buildPageWithTransition(
+    context,
+    state,
+    const SettingsPage(),
+    transitionType: RouteTransitionType.bottomSheet,
+  ),
+),
+
+// 自定义转场实现
+static Page<T> _buildPageWithTransition<T extends Object?>(
+  BuildContext context,
+  GoRouterState state,
+  Widget child, {
+  RouteTransitionType transitionType = RouteTransitionType.slide,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // 根据transitionType返回不同的转场动画
+      switch (transitionType) {
+        case RouteTransitionType.fade:
+          return FadeTransition(opacity: animation, child: child);
+        case RouteTransitionType.scale:
+          return ScaleTransition(scale: animation, child: child);
+        // ... 其他转场类型
+      }
+    },
+  );
+}
+```
+
+### 6. 路由路径管理
+
+```dart
+// 使用路径常量类
+class RoutePaths {
+  static const String splash = '/splash';
+  static const String onboarding = '/onboarding';
+  static const String login = '/login';
+  static const String home = '/';
+  static const String profile = '/profile';
+  static const String themeSettings = '/theme-settings';
+  static const String languageSettings = '/language-settings';
+  
+  // 获取子路径的辅助方法
+  static String getSubPath(String subPath, String parentPath) {
+    return subPath.replaceFirst('/', '');
+  }
+}
+```
+
+### 7. 底部导航集成
+
+```dart
+// AppShell处理底部导航
+class AppShell extends StatelessWidget {
+  const AppShell({
+    required this.navigationShell,
+    super.key,
+  });
+
+  final StatefulNavigationShell navigationShell;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: '我的'),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### 8. 错误处理
+
+```dart
+// 路由错误页面
+GoRouter(
+  errorBuilder: (context, state) => ErrorPage(error: state.error),
+  routes: [...],
+);
+
+// 自定义错误页面
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({required this.error, super.key});
+  
+  final Exception? error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('页面错误')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error, size: 64),
+            Text('页面不存在或发生错误'),
+            ElevatedButton(
+              onPressed: () => context.go('/'),
+              child: const Text('返回首页'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+### 9. 调试路由
+
+```dart
+// 开启路由调试日志
+GoRouter(
+  debugLogDiagnostics: true,  // 开发环境下开启
+  routes: [...],
+);
 ```
 
 ## 网络请求
@@ -266,41 +510,195 @@ result.fold(
 
 ## 数据存储
 
-### 1. 简单数据存储
+项目采用统一的存储服务架构，集成了三种存储方式：Hive数据库、SharedPreferences和安全存储。
+
+### 1. 存储服务架构
 
 ```dart
-// 存储字符串
-await StorageService.setString('key', 'value');
-
-// 获取字符串
-final value = StorageService.getString('key');
-
-// 存储JSON对象
-await StorageService.setJsonData('user', user.toJson());
-
-// 获取JSON对象
-final userData = StorageService.getJsonData('user');
+/// 统一存储服务入口
+StorageService.instance
+├── hive          // Hive数据库服务
+├── prefs         // SharedPreferences服务
+└── secure        // 安全存储服务
 ```
 
-### 2. 安全数据存储
+### 2. 初始化存储服务
 
 ```dart
-// 存储敏感数据（如token）
-await StorageService.setSecureData('token', 'jwt_token_here');
-
-// 获取敏感数据
-final token = await StorageService.getSecureData('token');
+// 在main()函数中初始化
+await StorageService.instance.initialize();
 ```
 
-### 3. Hive数据库
+### 3. Hive数据库存储（复杂数据）
 
 ```dart
-// 存储复杂数据
-await StorageService.setUserData('profile', user);
+// 用户数据操作
+await StorageService.instance.setUserData('profile', userModel);
+final user = StorageService.instance.getUserData<UserModel>('profile');
+await StorageService.instance.removeUserData('profile');
+await StorageService.instance.clearUserData(); // 清空所有用户数据
 
-// 获取复杂数据
-final user = StorageService.getUserData<User>('profile');
+// 直接访问Hive服务
+final hive = StorageService.instance.hive;
+
+// 用户数据盒子操作
+await hive.putUser('key', value);
+final value = hive.getUser<T>('key');
+await hive.deleteUser('key');
+await hive.clearUserData();
+
+// 设置数据盒子操作
+await hive.putSetting('theme_mode', 'dark');
+final theme = hive.getSetting<String>('theme_mode');
+await hive.deleteSetting('theme_mode');
+await hive.clearSettings();
+
+// 缓存数据盒子操作
+await hive.putCache('api_cache_key', data);
+final cache = hive.getCache<Map>('api_cache_key');
+await hive.deleteCache('api_cache_key');
+await hive.clearCache();
+
+// 通用操作
+await hive.put('custom_box', 'key', value);
+final value = hive.get<T>('custom_box', 'key', defaultValue: defaultValue);
+await hive.delete('custom_box', 'key');
+final exists = hive.containsKey('custom_box', 'key');
+final keys = hive.getKeys('custom_box');
+final values = hive.getValues('custom_box');
+await hive.clear('custom_box');
 ```
+
+### 4. SharedPreferences存储（简单数据）
+
+```dart
+// 直接访问SharedPreferences服务
+final prefs = StorageService.instance.prefs;
+
+// 字符串操作
+await prefs.setString('key', 'value');
+final value = prefs.getString('key', defaultValue: 'default');
+
+// 整数操作
+await prefs.setInt('count', 10);
+final count = prefs.getInt('count', defaultValue: 0);
+
+// 布尔值操作
+await prefs.setBool('isEnabled', true);
+final isEnabled = prefs.getBool('isEnabled', defaultValue: false);
+
+// 浮点数操作
+await prefs.setDouble('price', 99.99);
+final price = prefs.getDouble('price', defaultValue: 0.0);
+
+// 字符串列表操作
+await prefs.setStringList('tags', ['tag1', 'tag2']);
+final tags = prefs.getStringList('tags', defaultValue: []);
+
+// 其他操作
+await prefs.remove('key');
+final exists = prefs.containsKey('key');
+final keys = prefs.getKeys();
+await prefs.clear();
+await prefs.reload();
+```
+
+### 5. 安全存储（敏感数据）
+
+```dart
+// 直接访问安全存储服务
+final secure = StorageService.instance.secure;
+
+// 存储敏感数据（如token、密码等）
+await secure.write('user_token', 'jwt_token_here');
+await secure.write('api_key', 'sensitive_api_key');
+
+// 读取敏感数据
+final token = await secure.read('user_token');
+final apiKey = await secure.read('api_key');
+
+// 删除敏感数据
+await secure.delete('user_token');
+
+// 检查是否存在
+final exists = await secure.containsKey('user_token');
+
+// 批量操作
+final allData = await secure.readAll();
+await secure.writeAll({
+  'key1': 'value1',
+  'key2': 'value2',
+});
+await secure.deleteAll(); // 清空所有安全数据
+
+// 便捷方法（推荐使用）
+await StorageService.instance.setUserToken('jwt_token_here');
+final token = await StorageService.instance.getUserToken();
+await StorageService.instance.removeUserToken();
+final isLoggedIn = await StorageService.instance.isLoggedIn();
+```
+
+### 6. 存储键管理
+
+```dart
+// 使用统一的存储键常量
+class StorageKeys {
+  static const String userTokenKey = 'user_token';
+  static const String userInfoKey = 'user_info';
+  static const String isFirstLaunch = 'is_first_launch';
+  static const String onboardingCompleted = 'onboarding_completed';
+}
+
+// 使用示例
+await StorageService.instance.secure.write(
+  StorageKeys.userTokenKey, 
+  token
+);
+```
+
+### 7. 存储信息调试
+
+```dart
+// 获取存储统计信息
+final info = await StorageService.instance.getStorageInfo();
+print('Storage Info: $info');
+// 输出: {
+//   'hive': {'user_keys': 5, 'settings_keys': 3, 'cache_keys': 10},
+//   'shared_preferences': {'keys': 8},
+//   'secure_storage': {'keys': 2}
+// }
+```
+
+### 8. 清理存储数据
+
+```dart
+// 清理所有存储数据（谨慎使用）
+await StorageService.instance.clearAll();
+
+// 分别清理不同类型的数据
+await StorageService.instance.clearUserData();
+await StorageService.instance.hive.clearSettings();
+await StorageService.instance.hive.clearCache();
+await StorageService.instance.prefs.clear();
+await StorageService.instance.secure.deleteAll();
+```
+
+### 9. 存储服务关闭
+
+```dart
+// 应用关闭时清理资源
+await StorageService.instance.close();
+```
+
+### 10. 存储选择建议
+
+| 数据类型 | 推荐存储方式 | 说明 |
+|---------|-------------|-----|
+| 用户Token | 安全存储 | 敏感数据，需要加密 |
+| 用户设置 | SharedPreferences | 简单键值对 |
+| 用户资料 | Hive | 复杂对象数据 |
+| 缓存数据 | Hive | 需要高性能读写 |
+| 临时标记 | SharedPreferences | 简单标识符 |
 
 ## 测试指南
 

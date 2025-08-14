@@ -1,51 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:sky_eldercare_family/shared/widgets/theme_switcher.dart';
 
-import '../../../../generated/l10n/app_localizations.dart';
+/// 首页内容页面
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-/// 主页面 - 包含底部导航的容器页面
-class HomePage extends ConsumerStatefulWidget {
-  final StatefulNavigationShell navigationShell;
-  
-  const HomePage({
-    super.key,
-    required this.navigationShell,
-  });
-
-  @override
-  ConsumerState<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    
     return Scaffold(
-      body: widget.navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.navigationShell.currentIndex,
-        onTap: (index) {
-          widget.navigationShell.goBranch(
-            index,
-            initialLocation: index == widget.navigationShell.currentIndex,
-          );
-        },
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined),
-            activeIcon: const Icon(Icons.home),
-            label: l10n.home_title,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.person_outline),
-            activeIcon: const Icon(Icons.person),
-            label: l10n.profile_title,
-          ),
+      appBar: AppBar(
+        title: const Text('首页'),
+        actions: const [
+          // 应用栏主题切换按钮
+          AppBarThemeButton(),
         ],
       ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.home, size: 64),
+            SizedBox(height: 16),
+            Text(
+              '首页内容',
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 32),
+            Text(
+              '点击右上角图标可以快速切换主题',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+      // 主题切换浮动按钮（可选）
+      floatingActionButton: const ThemeToggleFab(),
     );
   }
 }

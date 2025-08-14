@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
 
 /// 存储服务 - 统一管理应用的数据存储
 class StorageService {
@@ -198,17 +199,17 @@ class StorageService {
 
   /// 存储用户令牌
   static Future<void> setUserToken(String token) async {
-    await setSecureData(AppConstants.userTokenKey, token);
+    await setSecureData(StorageKeys.userTokenKey, token);
   }
 
   /// 获取用户令牌
   static Future<String?> getUserToken() async {
-    return getSecureData(AppConstants.userTokenKey);
+    return getSecureData(StorageKeys.userTokenKey);
   }
 
   /// 移除用户令牌
   static Future<void> removeUserToken() async {
-    await deleteSecureData(AppConstants.userTokenKey);
+    await deleteSecureData(StorageKeys.userTokenKey);
   }
 
   /// 检查是否登录

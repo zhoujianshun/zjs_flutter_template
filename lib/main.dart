@@ -29,6 +29,8 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
+    // final router = AppRouter.createRouter();
+
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 

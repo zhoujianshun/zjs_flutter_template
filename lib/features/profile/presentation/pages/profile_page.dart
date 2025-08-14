@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/examples/riverpod_examples.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
@@ -43,7 +43,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       await StorageService.instance.clearUserData();
 
       if (!mounted) return;
-      context.go(AppConstants.loginRoute);
+      // context.go(AppConstants.loginRoute);
+      context.go(RoutePaths.login);
     }
   }
 
@@ -179,6 +180,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('通知设置功能待开发')),
                     );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.language,
+                  title: l10n.profile_language,
+                  onTap: () {
+                    context.push(RoutePaths.languageSettings);
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.language,
+                  title: l10n.profile_theme,
+                  onTap: () {
+                    context.push(RoutePaths.themeSettings);
                   },
                 ),
               ],

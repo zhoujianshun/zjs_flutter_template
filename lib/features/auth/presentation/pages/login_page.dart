@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/validators.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
@@ -53,7 +53,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       if (!mounted) return;
 
       // 跳转到首页
-      context.go(AppConstants.homeRoute);
+      context.go(RoutePaths.home);
     } catch (e) {
       if (!mounted) return;
 

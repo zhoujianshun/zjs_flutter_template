@@ -1,4 +1,4 @@
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
+import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/storage/local/hive_service.dart';
 import 'package:sky_eldercare_family/core/storage/local/secure_storage_service.dart';
@@ -135,22 +135,22 @@ class StorageService {
 
   /// 存储用户令牌
   Future<void> setUserToken(String token) async {
-    await secure.write(AppConstants.userTokenKey, token);
+    await secure.write(StorageKeys.userTokenKey, token);
   }
 
   /// 获取用户令牌
   Future<String?> getUserToken() async {
-    return secure.read(AppConstants.userTokenKey);
+    return secure.read(StorageKeys.userTokenKey);
   }
 
   /// 移除用户令牌
   Future<void> removeUserToken() async {
-    await secure.delete(AppConstants.userTokenKey);
+    await secure.delete(StorageKeys.userTokenKey);
   }
 
   /// 检查是否登录
   Future<bool> isLoggedIn() async {
-    return Future.value(true);
+    // return Future.value(true);
     final token = await getUserToken();
     return token != null && token.isNotEmpty;
   }

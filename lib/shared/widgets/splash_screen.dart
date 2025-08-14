@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
@@ -73,9 +74,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
     if (!mounted) return;
 
     if (isLoggedIn) {
-      context.go(AppConstants.homeRoute);
+      context.go(RoutePaths.home);
     } else {
-      context.go(AppConstants.loginRoute);
+      context.go(RoutePaths.login);
     }
   }
 
