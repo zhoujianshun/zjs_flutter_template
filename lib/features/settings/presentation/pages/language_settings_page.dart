@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/shared/services/language_service.dart';
+import 'package:sky_eldercare_family/config/language/app_language.dart';
 import 'package:sky_eldercare_family/shared/widgets/language_switcher.dart';
 
 /// 语言设置页面
