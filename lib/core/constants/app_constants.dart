@@ -2,24 +2,10 @@
 class AppConstants {
   AppConstants._();
 
-  // 应用信息
-  static const String appName = 'Sky Eldercare Family';
-  static const String appVersion = '1.0.0';
-
   // API配置
   static const String baseUrl = 'https://api.example.com';
   static const Duration connectionTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
-
-  // 存储Keys
-
-  // static const String themeKey = 'theme_mode';
-  // static const String languageKey = 'language_code';
-
-  // Hive Box Names
-  static const String userBox = 'user_box';
-  static const String settingsBox = 'settings_box';
-  static const String cacheBox = 'cache_box';
 
   // 动画时长
   static const Duration animationDuration = Duration(milliseconds: 300);

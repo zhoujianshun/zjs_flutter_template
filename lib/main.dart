@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sky_eldercare_family/config/routes/app_router.dart';
 import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/di/injection_container.dart';
+// import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 import 'package:sky_eldercare_family/shared/services/language_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 初始化Hive本地数据库
-  await Hive.initFlutter();
-
-  // 初始化存储服务
-  await StorageService.instance.initialize();
+  // // 初始化Hive本地数据库
+  // await Hive.initFlutter();
+  // // 初始化存储服务
+  // await StorageService.instance.initialize();
+  await InjectionContainer.initialize();
 
   runApp(
     const ProviderScope(

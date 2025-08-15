@@ -1,5 +1,11 @@
 // Riverpod 使用示例
 // 这个文件包含了各种Riverpod的使用案例，供学习参考
+//
+// 【重要】避免 "ref after widget disposed" 错误的最佳实践：
+// 1. 在异步回调中使用 ref 之前，始终检查 context.mounted
+// 2. 在 StatefulWidget 中，可以在 dispose() 方法中取消异步操作
+// 3. 避免在 Future.delayed 等异步回调中直接使用 ref
+// 4. 使用 ref.listen 时要注意回调中的异步操作
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -174,7 +180,7 @@ class CartNotifier extends StateNotifier<CartState> {
 
     try {
       // 模拟网络请求
-      await Future.delayed(const Duration(seconds: 2));
+      await Future<void>.delayed(const Duration(seconds: 2));
 
       // 结账成功，清空购物车
       state = CartState(items: []);
@@ -336,7 +342,7 @@ class User {
 class UserApiService {
   static Future<List<User>> getUsers() async {
     // 模拟网络延迟
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
 
     // 模拟可能的错误
     if (DateTime.now().millisecond % 3 == 0) {
@@ -539,9 +545,12 @@ class ListenerExample extends ConsumerWidget {
         // 当计数器是5的倍数时显示通知
         ref.read(notificationProvider.notifier).state = '计数器达到了 $next！';
 
-        // 3秒后清除通知
-        Future.delayed(const Duration(seconds: 3), () {
-          ref.read(notificationProvider.notifier).state = null;
+        // 3秒后清除通知 - 检查Widget是否仍然存在
+        Future<void>.delayed(const Duration(seconds: 3), () {
+          // 检查Widget是否仍然挂载，避免"ref after widget disposed"错误
+          if (context.mounted) {
+            ref.read(notificationProvider.notifier).state = null;
+          }
         });
       }
     });
@@ -584,6 +593,102 @@ class ListenerExample extends ConsumerWidget {
   }
 }
 
+// ========== 6. 正确的异步处理示例 ==========
+
+/// 演示如何正确处理异步操作，避免"ref after widget disposed"错误
+class SafeAsyncExample extends ConsumerStatefulWidget {
+  const SafeAsyncExample({super.key});
+
+  @override
+  ConsumerState<SafeAsyncExample> createState() => _SafeAsyncExampleState();
+}
+
+class _SafeAsyncExampleState extends ConsumerState<SafeAsyncExample> {
+  bool _isLoading = false;
+  String _message = '';
+
+  /// 安全的异步操作示例
+  Future<void> _performSafeAsyncOperation() async {
+    if (!mounted) return; // 检查Widget是否仍然挂载
+
+    setState(() {
+      _isLoading = true;
+      _message = '';
+    });
+
+    try {
+      // 模拟异步操作
+      await Future<void>.delayed(const Duration(seconds: 2));
+
+      // 在使用ref之前检查Widget是否仍然挂载
+      if (!mounted) return;
+
+      // 安全地使用ref更新状态
+      ref.read(notificationProvider.notifier).state = '异步操作完成！';
+
+      setState(() {
+        _isLoading = false;
+        _message = '操作成功完成';
+      });
+
+      // 延迟清除通知 - 正确的做法
+      Future<void>.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          // 再次检查
+          ref.read(notificationProvider.notifier).state = null;
+        }
+      });
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+        _message = '操作失败: $e';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            const Text('安全异步操作示例', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            const Text('演示如何避免 "ref after widget disposed" 错误'),
+            const SizedBox(height: 16),
+            if (_message.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: _message.contains('失败') ? Colors.red.withOpacity(0.1) : Colors.green.withOpacity(0.1),
+                  border: Border.all(
+                    color: _message.contains('失败') ? Colors.red : Colors.green,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(_message),
+              ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _isLoading ? null : _performSafeAsyncOperation,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Text('执行安全异步操作'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ========== 示例页面 ==========
 
 /// Riverpod示例页面
@@ -609,6 +714,8 @@ class RiverpodExamplesPage extends ConsumerWidget {
             AsyncDataExample(),
             SizedBox(height: 16),
             ProviderCombinationExample(),
+            SizedBox(height: 16),
+            SafeAsyncExample(),
             SizedBox(height: 32),
           ],
         ),

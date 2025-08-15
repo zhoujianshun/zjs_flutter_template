@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/errors/failures.dart';
 import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/network/api_providers.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/di/providers.dart';
 import 'package:sky_eldercare_family/shared/models/api_response.dart';
 import 'package:sky_eldercare_family/shared/models/user.dart';
 
@@ -322,7 +322,7 @@ class UserServiceImpl implements UserService {
 
 /// 用户服务提供者
 final userServiceProvider = Provider<UserService>((ref) {
-  final apiClient = ref.watch(apiClientProvider);
+  final apiClient = ref.watch(AppProviders.apiClientProvider);
   return UserServiceImpl(apiClient);
 });
 

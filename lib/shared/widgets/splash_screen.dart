@@ -147,21 +147,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
             const SizedBox(height: 16),
 
             // 版本信息
-            AnimatedBuilder(
-              animation: _fadeAnimation,
-              builder: (context, child) {
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text(
-                    'v${AppConstants.appVersion}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
-                  ),
-                );
-              },
-            ),
+            // AnimatedBuilder(
+            //   animation: _fadeAnimation,
+            //   builder: (context, child) {
+            //     return FadeTransition(
+            //       opacity: _fadeAnimation,
+            //       child: Text(
+            //         'v${AppConstants.appVersion}',
+            //         style: TextStyle(
+            //           fontSize: 14,
+            //           color: Colors.white.withOpacity(0.8),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
 
             const SizedBox(height: 80),
 

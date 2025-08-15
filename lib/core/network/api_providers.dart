@@ -1,7 +1,7 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/core/network/api_client.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:sky_eldercare_family/core/network/api_client.dart';
 
-/// 基础API客户端提供者
-final apiClientProvider = Provider<ApiClient>((ref) {
-  return ApiClient();
-});
+// /// 基础API客户端提供者
+// final apiClientProvider = Provider<ApiClient>((ref) {
+//   return ApiClient();
+// });

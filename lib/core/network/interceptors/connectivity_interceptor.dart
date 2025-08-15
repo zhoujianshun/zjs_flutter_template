@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/network/network_service.dart';
+import 'package:sky_eldercare_family/core/network/network_info.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
 
 /// Connectivity interceptor to check network status before requests
 class ConnectivityInterceptor extends Interceptor {
-  final NetworkService _networkService = NetworkService();
+  final NetworkInfo _networkInfo = NetworkInfo();
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      final isConnected = await _networkService.isConnected();
+      final isConnected = await _networkInfo.isConnected();
 
       if (!isConnected) {
         AppLogger.warning('No network connection available for: ${options.uri}');

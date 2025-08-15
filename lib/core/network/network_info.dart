@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// 网络状态枚举
 enum NetworkStatus {
@@ -8,7 +7,12 @@ enum NetworkStatus {
 }
 
 /// 网络服务 - 管理网络连接状态
-class NetworkService {
+class NetworkInfo {
+  factory NetworkInfo() => _instance;
+  NetworkInfo._();
+
+  /// 单例
+  static final NetworkInfo _instance = NetworkInfo._();
   final Connectivity _connectivity = Connectivity();
 
   /// 检查当前网络连接状态
@@ -41,22 +45,3 @@ class NetworkService {
     return connectivityResult == ConnectivityResult.mobile;
   }
 }
-
-/// 网络服务提供者
-final networkServiceProvider = Provider<NetworkService>((ref) {
-  return NetworkService();
-});
-
-/// 网络状态提供者
-final networkStatusProvider = StreamProvider<NetworkStatus>((ref) {
-  final networkService = ref.watch(networkServiceProvider);
-  return networkService.networkStatusStream;
-});
-
-/// 网络连接状态提供者 (简单布尔值)
-final isConnectedProvider = StreamProvider<bool>((ref) {
-  final networkService = ref.watch(networkServiceProvider);
-  return networkService.networkStatusStream.map(
-    (status) => status == NetworkStatus.connected,
-  );
-});
