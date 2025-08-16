@@ -100,27 +100,33 @@ flutter test
 ## 📦 核心依赖
 
 ### 状态管理
+
 - `flutter_riverpod` - 状态管理
 - `riverpod_annotation` - 代码生成注解
 
 ### 路由导航
+
 - `go_router` - 声明式路由
 
 ### 网络请求
+
 - `dio` - HTTP客户端
 - `pretty_dio_logger` - 网络日志
 
 ### 本地存储
+
 - `shared_preferences` - 简单键值存储
 - `hive` & `hive_flutter` - NoSQL数据库
 - `flutter_secure_storage` - 安全存储
 
 ### UI组件
+
 - `cached_network_image` - 网络图片缓存
 - `shimmer` - 骨架屏效果
 - `lottie` - 动画支持
 
 ### 工具库
+
 - `equatable` - 对象比较
 - `dartz` - 函数式编程
 - `connectivity_plus` - 网络状态监听
@@ -147,17 +153,20 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 ## 📱 功能模块
 
 ### 1. 认证模块 (Auth)
+
 - 用户登录/注册
 - 密码验证
 - 会话管理
 - 自动登录
 
 ### 2. 首页模块 (Home)
+
 - 底部导航
 - 主页内容
 - 数据展示
 
 ### 3. 个人中心 (Profile)
+
 - 用户信息管理
 - 主题设置
 - 语言切换
@@ -185,31 +194,52 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 ## 🔒 安全配置
 
 ### 存储安全
+
 - 敏感数据使用 `flutter_secure_storage` 加密存储
 - 用户token安全保存
 - 自动清理过期数据
 
 ### 网络安全
+
 - HTTPS请求
 - 请求拦截器
 - 错误统一处理
-- 自动token刷新
+<!-- - 自动token刷新 -->
 
 ## 📊 性能优化
 
 ### 图片缓存
+
 - 使用 `cached_network_image` 缓存网络图片
 - 内存和磁盘双重缓存
 
 ### 状态管理
+
 - Riverpod提供最小重建
 - 状态缓存和持久化
 - 异步状态管理
 
 ### UI优化
+
 - Shimmer骨架屏提升用户体验
 - 合理的页面动画
 - 响应式设计
+
+## 📚 文档指南
+
+### 核心概念文档
+
+- [Dartz 使用指南](docs/DARTZ_GUIDE.md) - 函数式错误处理完整指南
+- [Dartz 最佳实践](docs/DARTZ_BEST_PRACTICES.md) - 设计原则和开发规范
+- [Dartz + Riverpod 集成](docs/DARTZ_RIVERPOD_INTEGRATION.md) - 状态管理与错误处理集成
+- [Riverpod 使用指南](docs/RIVERPOD_GUIDE.md) - 状态管理最佳实践
+- [主题切换指南](docs/THEME_SWITCHING_GUIDE.md) - 主题系统使用说明
+- [开发指南](docs/DEVELOPMENT_GUIDE.md) - 项目开发规范
+
+### 代码示例
+
+- [Dartz 实用示例](lib/examples/dartz_examples.dart) - 完整的代码示例和用法演示
+- [Riverpod 示例](lib/examples/riverpod_examples.dart) - 状态管理示例
 
 ## 🛠️ 开发指南
 
@@ -251,18 +281,21 @@ feature_name/
 ### 常见问题
 
 1. **依赖冲突**
+
    ```bash
    flutter clean
    flutter pub get
    ```
 
 2. **代码生成失败**
+
    ```bash
    flutter packages pub run build_runner clean
    flutter packages pub run build_runner build --delete-conflicting-outputs
    ```
 
 3. **国际化文件未更新**
+
    ```bash
    flutter gen-l10n
    ```
