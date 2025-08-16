@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/config/routes/route_paths.dart';
+import 'package:sky_eldercare_family/config/themes/app_theme.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/examples/dark_mode_examples.dart';
+import 'package:sky_eldercare_family/examples/dartz_examples_page.dart';
+import 'package:sky_eldercare_family/examples/responsive_examples.dart';
 import 'package:sky_eldercare_family/examples/riverpod_examples.dart';
+import 'package:sky_eldercare_family/examples/theme_usage_examples.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 import 'package:sky_eldercare_family/shared/widgets/language_switcher.dart';
 import 'package:sky_eldercare_family/shared/widgets/theme_switcher.dart';
@@ -86,13 +91,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(AppSpacing.md),
         child: Column(
           children: [
             // 用户信息卡片
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(AppSpacing.lg),
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -107,7 +112,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,11 +123,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: AppSpacing.xs),
                           Text(
                             '普通用户',
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withOpacity(0.6),
+                              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -141,7 +146,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
             ),
 
-            const SizedBox(height: 24),
+            SizedBox(height: AppSpacing.xl),
 
             // 功能菜单
             _buildMenuSection(
@@ -168,7 +173,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ],
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.md),
 
             _buildMenuSection(
               title: l10n.profile_app_settings,
@@ -200,13 +205,115 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               customWidgets: [
                 // 语言切换组件
                 const LanguageSwitcher(),
-                const SizedBox(height: 16),
+                SizedBox(height: AppSpacing.md),
                 // 主题切换组件
                 const ThemeSwitcher(),
               ],
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.md),
+
+            // 示例展示区域
+            _buildMenuSection(
+              title: '🎨 功能示例展示',
+              items: [
+                _MenuItem(
+                  icon: Icons.palette_outlined,
+                  title: '主题系统示例',
+                  subtitle: '颜色、字体、间距系统展示',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const ThemeUsageExamples(),
+                      ),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.dark_mode_outlined,
+                  title: '暗黑模式适配',
+                  subtitle: '深色主题和自适应颜色展示',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const DarkModeExamples(),
+                      ),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.phone_android_outlined,
+                  title: '响应式设计',
+                  subtitle: 'ScreenUtil 响应式布局展示',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const ResponsiveExamples(),
+                      ),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.compare_arrows_outlined,
+                  title: '响应式对比',
+                  subtitle: '开启/关闭响应式设计对比',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const ResponsiveComparisonPage(),
+                      ),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.swap_horiz_outlined,
+                  title: '暗黑模式对比',
+                  subtitle: '浅色/深色主题切换对比',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const DarkModeComparisonPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            SizedBox(height: AppSpacing.md),
+
+            // 开发示例区域
+            _buildMenuSection(
+              title: '⚡ 开发技术示例',
+              items: [
+                _MenuItem(
+                  icon: Icons.code_outlined,
+                  title: 'Riverpod 状态管理',
+                  subtitle: '状态管理、依赖注入示例',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const RiverpodExamplesPage(),
+                      ),
+                    );
+                  },
+                ),
+                _MenuItem(
+                  icon: Icons.functions_outlined,
+                  title: 'Dartz 函数式编程',
+                  subtitle: 'Either、Option 等函数式编程示例',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) => const DartzExamplesPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            SizedBox(height: AppSpacing.md),
 
             _buildMenuSection(
               title: '其他',
@@ -229,22 +336,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     );
                   },
                 ),
-                _MenuItem(
-                  icon: Icons.code,
-                  title: 'Riverpod示例',
-                  subtitle: '学习状态管理',
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (context) => const RiverpodExamplesPage(),
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
 
-            const SizedBox(height: 32),
+            SizedBox(height: AppSpacing.xxxl),
 
             // 退出登录按钮
             SizedBox(
@@ -254,13 +349,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red,
                   side: const BorderSide(color: Colors.red),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
                 ),
                 child: Text(l10n.auth_logout),
               ),
             ),
 
-            const SizedBox(height: 32),
+            SizedBox(height: AppSpacing.xxxl),
           ],
         ),
       ),
@@ -277,7 +372,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -288,7 +383,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 color: theme.colorScheme.primary,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.md),
             ...customWidgets,
             if (customWidgets.isNotEmpty && items.isNotEmpty) const SizedBox(height: 8),
             ...items.map(_buildMenuItem),

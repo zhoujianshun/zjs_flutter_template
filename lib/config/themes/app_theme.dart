@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 
 /// 自定义颜色扩展
@@ -284,141 +285,141 @@ class AppTextStyles {
   AppTextStyles._();
 
   // === 标题样式 ===
-  static const TextStyle h1 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w700,
-    height: 1.2,
-    letterSpacing: -0.5,
-  );
+  static TextStyle get h1 => TextStyle(
+        fontSize: 32.sp,
+        fontWeight: FontWeight.w700,
+        height: 1.2,
+        letterSpacing: -0.5,
+      );
 
-  static const TextStyle h2 = TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w600,
-    height: 1.25,
-    letterSpacing: -0.25,
-  );
+  static TextStyle get h2 => TextStyle(
+        fontSize: 28.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.25,
+        letterSpacing: -0.25,
+      );
 
-  static const TextStyle h3 = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    height: 1.3,
-  );
+  static TextStyle get h3 => TextStyle(
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+      );
 
-  static const TextStyle h4 = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.35,
-  );
+  static TextStyle get h4 => TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.35,
+      );
 
-  static const TextStyle h5 = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w500,
-    height: 1.4,
-  );
+  static TextStyle get h5 => TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+      );
 
-  static const TextStyle h6 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    height: 1.4,
-  );
+  static TextStyle get h6 => TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+      );
 
   // === 正文样式 ===
-  static const TextStyle bodyLarge = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-    letterSpacing: 0.15,
-  );
+  static TextStyle get bodyLarge => TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        letterSpacing: 0.15,
+      );
 
-  static const TextStyle bodyMedium = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-    letterSpacing: 0.25,
-  );
+  static TextStyle get bodyMedium => TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        letterSpacing: 0.25,
+      );
 
-  static const TextStyle bodySmall = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    height: 1.43,
-    letterSpacing: 0.4,
-  );
+  static TextStyle get bodySmall => TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+        letterSpacing: 0.4,
+      );
 
   // === 特殊用途样式 ===
-  static const TextStyle button = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    height: 1.25,
-    letterSpacing: 0.5,
-  );
+  static TextStyle get button => TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.25,
+        letterSpacing: 0.5,
+      );
 
-  static const TextStyle buttonLarge = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    height: 1.25,
-    letterSpacing: 0.5,
-  );
+  static TextStyle get buttonLarge => TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.25,
+        letterSpacing: 0.5,
+      );
 
-  static const TextStyle caption = TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1.33,
-    letterSpacing: 0.4,
-  );
+  static TextStyle get caption => TextStyle(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        height: 1.33,
+        letterSpacing: 0.4,
+      );
 
-  static const TextStyle overline = TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w500,
-    height: 1.6,
-    letterSpacing: 1.5,
-  );
+  static TextStyle get overline => TextStyle(
+        fontSize: 10.sp,
+        fontWeight: FontWeight.w500,
+        height: 1.6,
+        letterSpacing: 1.5,
+      );
 
   // === 适老化大字体样式 ===
-  static const TextStyle elderlyH1 = TextStyle(
-    fontSize: 36,
-    fontWeight: FontWeight.w700,
-    height: 1.3,
-    letterSpacing: -0.5,
-  );
+  static TextStyle get elderlyH1 => TextStyle(
+        fontSize: 36.sp,
+        fontWeight: FontWeight.w700,
+        height: 1.3,
+        letterSpacing: -0.5,
+      );
 
-  static const TextStyle elderlyBodyLarge = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-    height: 1.6,
-    letterSpacing: 0.15,
-  );
+  static TextStyle get elderlyBodyLarge => TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w400,
+        height: 1.6,
+        letterSpacing: 0.15,
+      );
 
-  static const TextStyle elderlyButton = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.3,
-    letterSpacing: 0.5,
-  );
+  static TextStyle get elderlyButton => TextStyle(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+        letterSpacing: 0.5,
+      );
 }
 
 /// 自定义间距系统
 class AppSpacing {
   AppSpacing._();
 
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
-  static const double xxl = 48;
-  static const double xxxl = 64;
+  static double get xs => 4.w;
+  static double get sm => 8.w;
+  static double get md => 16.w;
+  static double get lg => 24.w;
+  static double get xl => 32.w;
+  static double get xxl => 48.w;
+  static double get xxxl => 64.w;
 }
 
 /// 自定义圆角系统
 class AppBorderRadius {
   AppBorderRadius._();
 
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 12;
-  static const double lg = 16;
-  static const double xl = 24;
-  static const double full = 999;
+  static double get xs => 4.r;
+  static double get sm => 8.r;
+  static double get md => 12.r;
+  static double get lg => 16.r;
+  static double get xl => 24.r;
+  static double get full => 999.r;
 }
 
 /// 应用主题配置
@@ -494,14 +495,14 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppBorderRadius.md),
         ),
-        margin: const EdgeInsets.all(AppSpacing.sm),
+        margin: EdgeInsets.all(AppSpacing.sm),
       ),
 
       // 按钮主题
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.md,
           ),
@@ -516,7 +517,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.neutral100,
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
           vertical: AppSpacing.md,
         ),
@@ -632,14 +633,14 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppBorderRadius.md),
         ),
-        margin: const EdgeInsets.all(AppSpacing.sm),
+        margin: EdgeInsets.all(AppSpacing.sm),
       ),
 
       // 按钮主题
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.md,
           ),
@@ -654,7 +655,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkNeutral200,
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
           vertical: AppSpacing.md,
         ),

@@ -18,21 +18,21 @@ class ThemeUsageExamples extends StatelessWidget {
         title: const Text('主题使用示例'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // === 颜色系统示例 ===
             _buildColorSection(),
-            const SizedBox(height: AppSpacing.xl),
+            SizedBox(height: AppSpacing.xl),
 
             // === 字体样式示例 ===
             _buildTypographySection(),
-            const SizedBox(height: AppSpacing.xl),
+            SizedBox(height: AppSpacing.xl),
 
             // === 养老应用特色示例 ===
             _buildEldercareSection(),
-            const SizedBox(height: AppSpacing.xl),
+            SizedBox(height: AppSpacing.xl),
 
             // === 组件样式示例 ===
             _buildComponentSection(),
@@ -51,7 +51,7 @@ class ThemeUsageExamples extends StatelessWidget {
           '颜色系统',
           style: AppTextStyles.h3.copyWith(color: AppColors.neutral900),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 品牌色系
         _buildColorRow('主色系', [
@@ -88,17 +88,17 @@ class ThemeUsageExamples extends StatelessWidget {
           '字体样式',
           style: AppTextStyles.h3.copyWith(color: AppColors.neutral900),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 标题样式
         Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             color: AppColors.neutral50,
             borderRadius: BorderRadius.circular(AppBorderRadius.md),
             border: Border.all(color: AppColors.neutral200),
           ),
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('H1 标题', style: AppTextStyles.h1),
@@ -119,11 +119,11 @@ class ThemeUsageExamples extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 适老化字体
         Container(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             color: AppColors.primary50,
             borderRadius: BorderRadius.circular(AppBorderRadius.md),
@@ -136,10 +136,10 @@ class ThemeUsageExamples extends StatelessWidget {
                 '适老化大字体样式',
                 style: AppTextStyles.h6.copyWith(color: AppColors.primary700),
               ),
-              const SizedBox(height: AppSpacing.sm),
-              const Text('适老化标题', style: AppTextStyles.elderlyH1),
-              const Text('适老化正文', style: AppTextStyles.elderlyBodyLarge),
-              const Text('适老化按钮', style: AppTextStyles.elderlyButton),
+              SizedBox(height: AppSpacing.sm),
+              Text('适老化标题', style: AppTextStyles.elderlyH1),
+              Text('适老化正文', style: AppTextStyles.elderlyBodyLarge),
+              Text('适老化按钮', style: AppTextStyles.elderlyButton),
             ],
           ),
         ),
@@ -156,7 +156,7 @@ class ThemeUsageExamples extends StatelessWidget {
           '养老应用特色',
           style: AppTextStyles.h3.copyWith(color: AppColors.neutral900),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 健康状态卡片
         Row(
@@ -169,7 +169,7 @@ class ThemeUsageExamples extends StatelessWidget {
                 Icons.favorite,
               ),
             ),
-            const SizedBox(width: AppSpacing.sm),
+            SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _buildStatusCard(
                 '需要注意',
@@ -178,7 +178,7 @@ class ThemeUsageExamples extends StatelessWidget {
                 Icons.warning,
               ),
             ),
-            const SizedBox(width: AppSpacing.sm),
+            SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _buildStatusCard(
                 '紧急情况',
@@ -190,7 +190,7 @@ class ThemeUsageExamples extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 护理服务卡片
         Row(
@@ -202,7 +202,7 @@ class ThemeUsageExamples extends StatelessWidget {
                 Icons.medical_services,
               ),
             ),
-            const SizedBox(width: AppSpacing.sm),
+            SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _buildServiceCard(
                 '生活护理',
@@ -210,7 +210,7 @@ class ThemeUsageExamples extends StatelessWidget {
                 Icons.home_filled,
               ),
             ),
-            const SizedBox(width: AppSpacing.sm),
+            SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _buildServiceCard(
                 '康复护理',
@@ -221,12 +221,12 @@ class ThemeUsageExamples extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 紧急按钮示例
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
             color: AppColors.emergencyBg,
             borderRadius: BorderRadius.circular(AppBorderRadius.lg),
@@ -239,14 +239,14 @@ class ThemeUsageExamples extends StatelessWidget {
                 color: AppColors.emergency,
                 size: 48,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              SizedBox(height: AppSpacing.sm),
               Text(
                 '紧急呼叫',
                 style: AppTextStyles.elderlyButton.copyWith(
                   color: AppColors.emergency,
                 ),
               ),
-              const SizedBox(height: AppSpacing.xs),
+              SizedBox(height: AppSpacing.xs),
               Text(
                 '点击此按钮进行紧急求助',
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -270,7 +270,7 @@ class ThemeUsageExamples extends StatelessWidget {
           '组件样式',
           style: AppTextStyles.h3.copyWith(color: AppColors.neutral900),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
 
         // 按钮示例
         Wrap(
@@ -292,12 +292,12 @@ class ThemeUsageExamples extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: AppSpacing.lg),
 
         // 输入框示例
-        const Column(
+        Column(
           children: [
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: '标准输入框',
                 hintText: '请输入内容',
@@ -305,7 +305,7 @@ class ThemeUsageExamples extends StatelessWidget {
               ),
             ),
             SizedBox(height: AppSpacing.md),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: '错误状态',
                 hintText: '请输入正确的内容',
@@ -316,25 +316,25 @@ class ThemeUsageExamples extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: AppSpacing.lg),
 
         // 卡片示例
         Card(
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   '卡片标题',
                   style: AppTextStyles.h5,
                 ),
-                const SizedBox(height: AppSpacing.sm),
-                const Text(
+                SizedBox(height: AppSpacing.sm),
+                Text(
                   '这是一个使用新主题系统的卡片示例。卡片使用了统一的圆角、间距和颜色配置。',
                   style: AppTextStyles.bodyMedium,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                SizedBox(height: AppSpacing.md),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -342,7 +342,7 @@ class ThemeUsageExamples extends StatelessWidget {
                       onPressed: () {},
                       child: const Text('取消'),
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    SizedBox(width: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () {},
                       child: const Text('确定'),
@@ -365,27 +365,27 @@ class ThemeUsageExamples extends StatelessWidget {
           title,
           style: AppTextStyles.h6.copyWith(color: AppColors.neutral700),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        SizedBox(height: AppSpacing.sm),
         Row(
           children: colors.map((color) => Expanded(child: color)).toList(),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: AppSpacing.md),
       ],
     );
   }
 
   Widget _buildStatusCard(String title, Color color, Color bgColor, IconData icon) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Icon(icon, color: color, size: 24),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: AppSpacing.xs),
           Text(
             title,
             style: AppTextStyles.caption.copyWith(color: color),
@@ -398,16 +398,16 @@ class ThemeUsageExamples extends StatelessWidget {
 
   Widget _buildServiceCard(String title, Color color, IconData icon) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Icon(icon, color: color, size: 28),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: AppSpacing.xs),
           Text(
             title,
             style: AppTextStyles.bodySmall.copyWith(color: color),
@@ -427,7 +427,7 @@ class _ColorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: AppSpacing.xs),
+      margin: EdgeInsets.only(right: AppSpacing.xs),
       child: Column(
         children: [
           Container(
@@ -438,7 +438,7 @@ class _ColorCard extends StatelessWidget {
               border: Border.all(color: AppColors.neutral300),
             ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: AppSpacing.xs),
           Text(
             name,
             style: AppTextStyles.caption.copyWith(color: AppColors.neutral600),
@@ -468,7 +468,7 @@ class HighContrastThemeExample extends StatelessWidget {
         elevation: 1,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -478,14 +478,14 @@ class HighContrastThemeExample extends StatelessWidget {
                 color: AppColors.highContrastText,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            SizedBox(height: AppSpacing.lg),
             Text(
               '这是专为视力不佳的老年用户设计的高对比度界面。使用了更大的字体、更高的对比度和更清晰的视觉层次。',
               style: AppTextStyles.elderlyBodyLarge.copyWith(
                 color: AppColors.highContrastText,
               ),
             ),
-            const SizedBox(height: AppSpacing.xl),
+            SizedBox(height: AppSpacing.xl),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -493,7 +493,7 @@ class HighContrastThemeExample extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.highContrastAccent,
                   foregroundColor: AppColors.highContrastBg,
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
                   textStyle: AppTextStyles.elderlyButton,
                 ),
                 child: const Text('大按钮示例'),

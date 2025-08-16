@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sky_eldercare_family/config/language/app_language.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sky_eldercare_family/config/routes/app_router.dart';
@@ -35,24 +36,36 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 
-    return MaterialApp.router(
-      title: 'Sky Eldercare Family',
+    return ScreenUtilInit(
+      // 设计稿的设备尺寸（iPhone 14 Pro）
+      designSize: const Size(393, 852),
+      // 最小文字适配
+      minTextAdapt: true,
+      // 支持分屏
+      splitScreenMode: true,
+      // 适配方向
+      useInheritedMediaQuery: true,
+      builder: (context, child) {
+        return MaterialApp.router(
+          title: 'Sky Eldercare Family',
 
-      // 路由配置
-      routerConfig: router,
+          // 路由配置
+          routerConfig: router,
 
-      // 主题配置
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
+          // 主题配置
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
 
-      // 国际化配置
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: locale,
+          // 国际化配置
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: locale,
 
-      // 调试配置
-      debugShowCheckedModeBanner: false,
+          // 调试配置
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

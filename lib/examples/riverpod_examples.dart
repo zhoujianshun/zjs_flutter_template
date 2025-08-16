@@ -596,7 +596,7 @@ class ListenerExample extends ConsumerWidget {
               width: double.infinity,
               height: 60,
               decoration: BoxDecoration(
-                color: notification != null ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+                color: notification != null ? Colors.green.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
                 border: Border.all(
                   color: notification != null ? Colors.green : Colors.grey,
                 ),
@@ -685,7 +685,8 @@ class _SafeAsyncExampleState extends ConsumerState<SafeAsyncExample> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _message.contains('失败') ? Colors.red.withOpacity(0.1) : Colors.green.withOpacity(0.1),
+                  color:
+                      _message.contains('失败') ? Colors.red.withValues(alpha: 0.1) : Colors.green.withValues(alpha: 0.1),
                   border: Border.all(
                     color: _message.contains('失败') ? Colors.red : Colors.green,
                   ),
