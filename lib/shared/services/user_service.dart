@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sky_eldercare_family/core/errors/error_utils.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/errors/failures.dart';
 import 'package:sky_eldercare_family/core/network/api_client.dart';
@@ -10,6 +11,12 @@ import 'package:sky_eldercare_family/shared/models/user.dart';
 
 /// 用户服务接口
 abstract class UserService {
+  /// 手机号登录
+  Future<Either<Failure, User>> phoneLogin({
+    required String phone,
+    required String code,
+  });
+
   /// 登录
   Future<Either<Failure, User>> login({
     required String email,
@@ -87,7 +94,7 @@ class UserServiceImpl implements UserService {
         return Left(AuthFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -130,7 +137,7 @@ class UserServiceImpl implements UserService {
         return Left(AuthFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -165,7 +172,7 @@ class UserServiceImpl implements UserService {
         return Left(ServerFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -208,7 +215,7 @@ class UserServiceImpl implements UserService {
         return Left(ServerFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -239,7 +246,7 @@ class UserServiceImpl implements UserService {
         return Left(ServerFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -256,7 +263,7 @@ class UserServiceImpl implements UserService {
 
       return const Right(true);
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
@@ -283,40 +290,16 @@ class UserServiceImpl implements UserService {
         return Left(AuthFailure(message: apiResponse.message));
       }
     } on AppException catch (e) {
-      return Left(_mapExceptionToFailure(e));
+      return Left(mapExceptionToFailure(e));
     } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
   }
 
-  /// 将异常映射为失败
-  Failure _mapExceptionToFailure(AppException exception) {
-    if (exception is NetworkException) {
-      return NetworkFailure(
-        message: exception.message,
-        code: exception.code,
-      );
-    } else if (exception is ServerException) {
-      return ServerFailure(
-        message: exception.message,
-        code: exception.code,
-      );
-    } else if (exception is AuthException) {
-      return AuthFailure(
-        message: exception.message,
-        code: exception.code,
-      );
-    } else if (exception is ValidationException) {
-      return ValidationFailure(
-        message: exception.message,
-        code: exception.code,
-      );
-    } else {
-      return UnknownFailure(
-        message: exception.message,
-        code: exception.code,
-      );
-    }
+  @override
+  Future<Either<Failure, User>> phoneLogin({required String phone, required String code}) {
+    // TODO: implement phoneLogin
+    throw UnimplementedError();
   }
 }
 

@@ -9,11 +9,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'riverpod_examples.g.dart';
 
 // ========== 1. 简单状态管理 ==========
 
+@riverpod
+String helloWorld(Ref ref) {
+  return 'Hello world';
+}
+
 /// 计数器Provider - 最基础的状态管理
-final counterProvider = StateProvider<int>((ref) => 0);
+// final counterProvider = StateProvider<int>((ref) => 0);
+
+@Riverpod(keepAlive: true)
+class Counter extends _$Counter {
+  @override
+  int build() => 0;
+
+  void increment() {
+    state++;
+  }
+
+  void decrement() {
+    state--;
+  }
+}
 
 /// 计数器Widget示例
 class CounterExample extends ConsumerWidget {
@@ -23,7 +45,7 @@ class CounterExample extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // 监听计数器变化，当值改变时Widget会重新构建
     final count = ref.watch(counterProvider);
-
+    // final helloWorld = ref.watch(helloWorldProvider);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),

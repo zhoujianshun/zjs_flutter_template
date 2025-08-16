@@ -34,6 +34,17 @@ class RoutePaths {
   static const String notFound = '/404';
   static const String error = '/error';
 
+  static const publicRoutes = [
+    splash,
+    onboarding,
+    login,
+    register,
+    forgotPassword,
+    resetPassword,
+    notFound,
+    error,
+  ];
+
   /// Get route name from path
   static String getRouteName(String path) {
     switch (path) {
@@ -84,17 +95,6 @@ class RoutePaths {
 
   /// Check if route requires authentication
   static bool requiresAuth(String path) {
-    const publicRoutes = [
-      splash,
-      onboarding,
-      login,
-      register,
-      forgotPassword,
-      resetPassword,
-      notFound,
-      error,
-    ];
-
     return !publicRoutes.contains(path);
   }
 

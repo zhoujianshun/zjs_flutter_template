@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/config/routes/route_guards.dart';
 import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/features/app_shell.dart';
-import 'package:sky_eldercare_family/features/auth/presentation/pages/login_page.dart';
-import 'package:sky_eldercare_family/features/home/presentation/pages/home_page.dart';
-import 'package:sky_eldercare_family/features/onboarding/onboarding_page.dart';
-import 'package:sky_eldercare_family/features/profile/presentation/pages/profile_page.dart';
-import 'package:sky_eldercare_family/features/settings/presentation/pages/language_settings_page.dart';
-import 'package:sky_eldercare_family/features/settings/presentation/pages/theme_settings_page.dart';
+import 'package:sky_eldercare_family/features/pages/app_shell.dart';
+import 'package:sky_eldercare_family/features/pages/auth/login_page.dart';
+import 'package:sky_eldercare_family/features/pages/home/home_page.dart';
+import 'package:sky_eldercare_family/features/pages/onboarding/onboarding_page.dart';
+import 'package:sky_eldercare_family/features/pages/pages/profile_page.dart';
+import 'package:sky_eldercare_family/features/pages/settings/language_settings_page.dart';
+import 'package:sky_eldercare_family/features/pages/settings/theme_settings_page.dart';
 import 'package:sky_eldercare_family/shared/widgets/splash_screen.dart';
 
 /// Application router configuration using GoRouter
