@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Retry interceptor for handling network failures with automatic retry
 class RetryInterceptor extends Interceptor {

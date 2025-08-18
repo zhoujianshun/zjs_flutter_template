@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/config/routes/route_paths.dart';
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:zjs_flutter_template/config/routes/route_paths.dart';
+import 'package:zjs_flutter_template/core/constants/app_constants.dart';
+import 'package:zjs_flutter_template/core/storage/storage_service.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
+import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
 
 /// 启动页面
 class SplashScreen extends ConsumerStatefulWidget {

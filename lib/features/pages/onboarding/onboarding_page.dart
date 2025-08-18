@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/config/routes/route_guards.dart';
-import 'package:sky_eldercare_family/config/routes/route_paths.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/config/routes/route_guards.dart';
+import 'package:zjs_flutter_template/config/routes/route_paths.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Onboarding page for first-time users
 class OnboardingPage extends ConsumerStatefulWidget {

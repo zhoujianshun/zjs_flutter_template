@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/config/routes/route_paths.dart';
-import 'package:sky_eldercare_family/core/utils/validators.dart';
-import 'package:sky_eldercare_family/features/providers/auth.dart';
-import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
-import 'package:sky_eldercare_family/shared/models/auth_models.dart';
-import 'package:sky_eldercare_family/shared/widgets/loading_button.dart';
+import 'package:zjs_flutter_template/config/routes/route_paths.dart';
+import 'package:zjs_flutter_template/core/utils/validators.dart';
+import 'package:zjs_flutter_template/features/providers/auth.dart';
+import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
+import 'package:zjs_flutter_template/shared/models/auth_models.dart';
+import 'package:zjs_flutter_template/shared/widgets/loading_button.dart';
 
 /// 登录页面
 class LoginPage extends ConsumerStatefulWidget {

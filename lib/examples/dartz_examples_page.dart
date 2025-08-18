@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-import 'package:sky_eldercare_family/examples/dartz_examples.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/examples/dartz_examples.dart';
 
 /// Dartz 函数式编程示例页面
 ///

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-import 'package:sky_eldercare_family/core/utils/responsive_utils.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/core/utils/responsive_utils.dart';
 
 /// 响应式设计示例
 ///

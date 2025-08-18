@@ -1,5 +1,5 @@
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
 
 /// 将异常映射为失败
 Failure mapExceptionToFailure(AppException exception) {

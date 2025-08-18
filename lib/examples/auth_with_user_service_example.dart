@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/features/providers/auth.dart';
-import 'package:sky_eldercare_family/shared/models/auth_models.dart';
+import 'package:zjs_flutter_template/features/providers/auth.dart';
+import 'package:zjs_flutter_template/shared/models/auth_models.dart';
 
 /// Auth + UserService 集成使用示例
 class AuthWithUserServiceExamplePage extends ConsumerStatefulWidget {

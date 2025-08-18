@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/network/network_info.dart';
+import 'package:zjs_flutter_template/core/network/api_client.dart';
+import 'package:zjs_flutter_template/core/network/network_info.dart';
 
 void main() {
   group('GetIt Service Locator Simple Tests', () {

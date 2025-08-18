@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
 
 /// 主题切换Widget - 支持多种样式
 class ThemeSwitcher extends ConsumerWidget {
@@ -125,7 +125,7 @@ class ThemeSwitcher extends ConsumerWidget {
           const SizedBox(height: 8),
         ],
         DropdownButtonFormField<ThemeMode>(
-          value: themeMode,
+          initialValue: themeMode,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

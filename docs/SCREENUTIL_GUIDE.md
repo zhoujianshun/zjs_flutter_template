@@ -139,7 +139,7 @@ class AppBorderRadius {
 ### ResponsiveUtils 使用
 
 ```dart
-import 'package:sky_eldercare_family/core/utils/responsive_utils.dart';
+import 'package:zjs_flutter_template/core/utils/responsive_utils.dart';
 
 class MyWidget extends StatelessWidget {
   @override

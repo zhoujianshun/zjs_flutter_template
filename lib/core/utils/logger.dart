@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:sky_eldercare_family/config/env/app_config.dart';
+import 'package:zjs_flutter_template/config/env/app_config.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 /// Application logger with different output levels

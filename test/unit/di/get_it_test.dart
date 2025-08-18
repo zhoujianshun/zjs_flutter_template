@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/network/network_info.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
+import 'package:zjs_flutter_template/core/network/api_client.dart';
+import 'package:zjs_flutter_template/core/network/network_info.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
+import 'package:zjs_flutter_template/shared/services/user_service.dart';
 
 void main() {
   group('GetIt Service Locator Tests', () {

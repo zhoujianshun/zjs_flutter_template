@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// SharedPreferences service for simple key-value storage
 class SharedPrefsService {

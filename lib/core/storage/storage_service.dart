@@ -1,9 +1,9 @@
-import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/storage/local/hive_service.dart';
-import 'package:sky_eldercare_family/core/storage/local/secure_storage_service.dart';
-import 'package:sky_eldercare_family/core/storage/local/shared_prefs_service.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/constants/storage_keys.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/storage/local/hive_service.dart';
+import 'package:zjs_flutter_template/core/storage/local/secure_storage_service.dart';
+import 'package:zjs_flutter_template/core/storage/local/shared_prefs_service.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Unified storage service that manages all storage types
 class StorageService {

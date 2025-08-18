@@ -40,7 +40,7 @@
 ### 1. 获取服务实例
 
 ```dart
-import 'package:sky_eldercare_family/di/service_locator.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
 
 // 推荐方式：使用 getIt<T>() 函数
 final userService = getIt<UserService>();

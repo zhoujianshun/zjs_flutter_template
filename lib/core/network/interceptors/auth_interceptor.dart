@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
+import 'package:zjs_flutter_template/core/storage/storage_service.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
 
 /// Authentication interceptor for adding tokens to requests
 class AuthInterceptor extends Interceptor {

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/network/interceptors/auth_interceptor.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/network/interceptors/auth_interceptor.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// API客户端 - 统一网络请求管理
 

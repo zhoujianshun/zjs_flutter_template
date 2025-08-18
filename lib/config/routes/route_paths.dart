@@ -1,4 +1,4 @@
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Application route paths constants
 class RoutePaths {

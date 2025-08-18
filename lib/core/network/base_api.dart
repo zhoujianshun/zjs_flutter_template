@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/core/errors/error_utils.dart';
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
-import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/shared/models/api_response.dart';
+import 'package:zjs_flutter_template/core/errors/error_utils.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/network/api_client.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
+import 'package:zjs_flutter_template/shared/models/api_response.dart';
 
 /// 基础API类，提供统一的API响应处理
 abstract class BaseAPI {

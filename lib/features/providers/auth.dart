@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/shared/models/auth_models.dart';
-import 'package:sky_eldercare_family/shared/models/user.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
+import 'package:zjs_flutter_template/shared/models/auth_models.dart';
+import 'package:zjs_flutter_template/shared/models/user.dart';
+import 'package:zjs_flutter_template/shared/services/user_service.dart';
 
 part 'auth.freezed.dart';
 part 'auth.g.dart';

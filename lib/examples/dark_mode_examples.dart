@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
 
 /// 暗黑模式适配示例
 ///

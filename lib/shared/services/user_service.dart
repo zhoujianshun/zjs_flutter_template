@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
-import 'package:sky_eldercare_family/shared/apis/user_api.dart';
-import 'package:sky_eldercare_family/shared/models/auth_models.dart';
-import 'package:sky_eldercare_family/shared/models/user.dart';
+import 'package:zjs_flutter_template/core/constants/storage_keys.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/storage/storage_service.dart';
+import 'package:zjs_flutter_template/shared/apis/user_api.dart';
+import 'package:zjs_flutter_template/shared/models/auth_models.dart';
+import 'package:zjs_flutter_template/shared/models/user.dart';
 
 /// 用户服务接口
 abstract class UserService {

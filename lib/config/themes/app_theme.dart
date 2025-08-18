@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
+import 'package:zjs_flutter_template/core/storage/storage_service.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
 
 /// 自定义颜色扩展
 class AppColors {

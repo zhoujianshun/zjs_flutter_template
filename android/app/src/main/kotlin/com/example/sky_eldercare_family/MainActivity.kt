@@ -1,4 +1,4 @@
-package com.example.sky_eldercare_family
+package com.example.zjs_flutter_template
 
 import io.flutter.embedding.android.FlutterActivity
 

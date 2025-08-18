@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sky_eldercare_family/config/language/app_language.dart';
-import 'package:sky_eldercare_family/config/routes/app_router.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:zjs_flutter_template/config/language/app_language.dart';
+import 'package:zjs_flutter_template/config/routes/app_router.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
+import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

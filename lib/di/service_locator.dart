@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
-import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/network/network_info.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/di/service_locator.config.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
+import 'package:zjs_flutter_template/core/constants/app_constants.dart';
+import 'package:zjs_flutter_template/core/network/api_client.dart';
+import 'package:zjs_flutter_template/core/network/network_info.dart';
+import 'package:zjs_flutter_template/core/storage/storage_service.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
+import 'package:zjs_flutter_template/di/service_locator.config.dart';
+import 'package:zjs_flutter_template/shared/services/user_service.dart';
 
 /// 全局服务定位器实例
 final GetIt sl = GetIt.instance;

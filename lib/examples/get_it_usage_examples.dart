@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
+import 'package:zjs_flutter_template/di/service_locator.dart';
+import 'package:zjs_flutter_template/shared/services/user_service.dart';
 
 /// GetIt使用示例
 class GetItUsageExamples {

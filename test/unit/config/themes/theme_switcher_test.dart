@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sky_eldercare_family/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/config/themes/app_theme.dart';
 
 void main() {
   group('ThemeModeNotifier', () {

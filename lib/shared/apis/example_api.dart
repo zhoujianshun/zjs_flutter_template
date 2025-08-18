@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
-import 'package:sky_eldercare_family/core/network/api_response_handler.dart';
-import 'package:sky_eldercare_family/core/network/base_api.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/network/api_response_handler.dart';
+import 'package:zjs_flutter_template/core/network/base_api.dart';
 
 /// 示例API类，展示如何使用统一的API响应处理
 ///

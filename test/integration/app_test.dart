@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:sky_eldercare_family/main.dart' as app;
+import 'package:zjs_flutter_template/main.dart' as app;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +14,10 @@ void main() {
 
       // 验证启动页面显示
       expect(find.text('Sky Eldercare Family'), findsOneWidget);
-      
+
       // 等待启动页面结束并跳转到登录页
       await tester.pumpAndSettle(const Duration(seconds: 4));
-      
+
       // 验证跳转到登录页面
       expect(find.text('欢迎回来'), findsOneWidget);
       expect(find.text('登录'), findsWidgets);
@@ -41,7 +41,7 @@ void main() {
       // 点击登录按钮
       final loginButton = find.text('登录').first;
       await tester.tap(loginButton);
-      
+
       // 等待登录加载和跳转
       await tester.pumpAndSettle(const Duration(seconds: 3));
 
@@ -54,7 +54,7 @@ void main() {
       // 完成登录流程
       app.main();
       await tester.pumpAndSettle(const Duration(seconds: 4));
-      
+
       // 登录
       await tester.enterText(find.byType(TextFormField).first, 'test@example.com');
       await tester.enterText(find.byType(TextFormField).at(1), 'password123');
@@ -84,7 +84,7 @@ void main() {
       // 完成登录流程
       app.main();
       await tester.pumpAndSettle(const Duration(seconds: 4));
-      
+
       await tester.enterText(find.byType(TextFormField).first, 'test@example.com');
       await tester.enterText(find.byType(TextFormField).at(1), 'password123');
       await tester.tap(find.text('登录').first);

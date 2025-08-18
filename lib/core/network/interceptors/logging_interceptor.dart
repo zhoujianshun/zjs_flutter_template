@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/config/env/app_config.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/config/env/app_config.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Logging interceptor for development and debugging
 class LoggingInterceptor extends Interceptor {

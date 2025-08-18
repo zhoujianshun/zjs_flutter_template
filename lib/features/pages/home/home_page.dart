@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sky_eldercare_family/shared/widgets/theme_switcher.dart';
+import 'package:zjs_flutter_template/shared/widgets/theme_switcher.dart';
 
 /// 首页内容页面
 class HomePage extends StatelessWidget {

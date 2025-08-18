@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/config/language/app_language.dart';
-import 'package:sky_eldercare_family/shared/widgets/language_switcher.dart';
+import 'package:zjs_flutter_template/config/language/app_language.dart';
+import 'package:zjs_flutter_template/shared/widgets/language_switcher.dart';
 
 /// 语言设置页面
 class LanguageSettingsPage extends ConsumerWidget {

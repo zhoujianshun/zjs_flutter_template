@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
 
 extension EitherExtensions<L, R> on Either<L, R> {
   /// 获取右侧值，如果是左侧则返回 null

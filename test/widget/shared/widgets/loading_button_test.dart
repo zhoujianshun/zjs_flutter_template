@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sky_eldercare_family/shared/widgets/loading_button.dart';
+import 'package:zjs_flutter_template/shared/widgets/loading_button.dart';
 
 void main() {
   group('LoadingButton', () {
     testWidgets('should display child when not loading', (WidgetTester tester) async {
       const buttonText = 'Test Button';
-      bool pressed = false;
+      var pressed = false;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -22,7 +22,7 @@ void main() {
 
       // 验证按钮文本显示
       expect(find.text(buttonText), findsOneWidget);
-      
+
       // 验证没有加载指示器
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
@@ -51,13 +51,13 @@ void main() {
 
       // 验证显示加载指示器
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      
+
       // 验证不显示按钮文本
       expect(find.text(buttonText), findsNothing);
     });
 
     testWidgets('should disable button when loading', (WidgetTester tester) async {
-      bool pressed = false;
+      var pressed = false;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -99,7 +99,7 @@ void main() {
 
       // 获取ElevatedButton widget
       final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
-      
+
       // 验证样式设置
       expect(button.style?.backgroundColor?.resolve({}), backgroundColor);
       expect(button.style?.foregroundColor?.resolve({}), foregroundColor);
@@ -125,7 +125,7 @@ void main() {
 
       // 获取SizedBox widget
       final sizedBox = tester.widget<SizedBox>(find.byType(SizedBox));
-      
+
       // 验证尺寸设置
       expect(sizedBox.width, customWidth);
       expect(sizedBox.height, customHeight);

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/core/errors/exceptions.dart';
-import 'package:sky_eldercare_family/core/network/network_info.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/errors/exceptions.dart';
+import 'package:zjs_flutter_template/core/network/network_info.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
 
 /// Connectivity interceptor to check network status before requests
 class ConnectivityInterceptor extends Interceptor {

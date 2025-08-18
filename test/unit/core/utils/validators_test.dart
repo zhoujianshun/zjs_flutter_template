@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sky_eldercare_family/core/utils/validators.dart';
+import 'package:zjs_flutter_template/core/utils/validators.dart';
 
 void main() {
   group('Validators', () {

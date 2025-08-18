@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sky_eldercare_family/shared/models/user.dart';
+import 'package:zjs_flutter_template/shared/models/user.dart';
 
 part 'auth_models.freezed.dart';
 part 'auth_models.g.dart';

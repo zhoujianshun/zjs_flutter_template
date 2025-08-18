@@ -1,8 +1,8 @@
 // ignore_for_file: unused_local_variable, avoid_print
 
 import 'package:dartz/dartz.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
-import 'package:sky_eldercare_family/shared/models/user.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
+import 'package:zjs_flutter_template/shared/models/user.dart';
 
 /// Dartz 使用示例
 ///
@@ -48,7 +48,7 @@ class DartzExamples {
       }
 
       if (userId == 'server_error') {
-        return const Left(ServerFailure(message: '服务器内部错误', code: 500));
+        return const Left(ServerFailure(message: '服务器内部错误'));
       }
 
       // 模拟成功获取用户信息

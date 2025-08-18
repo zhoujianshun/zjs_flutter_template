@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
 
 /// 主页面 - 包含底部导航的容器页面
 class AppShell extends ConsumerStatefulWidget {

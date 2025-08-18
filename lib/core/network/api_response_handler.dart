@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:sky_eldercare_family/core/errors/failures.dart';
-import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/shared/models/api_response.dart';
+import 'package:zjs_flutter_template/core/errors/failures.dart';
+import 'package:zjs_flutter_template/core/utils/logger.dart';
+import 'package:zjs_flutter_template/shared/models/api_response.dart';
 
 /// API响应处理工具类
 class ApiResponseHandler {
