@@ -2,7 +2,22 @@
 
 ## 概述
 
-本文档对比分析了在Flutter项目中使用GetIt和Riverpod进行依赖注入的优劣势，并说明了为什么在某些场景下GetIt可能是更好的选择。
+本文档对比分析了在Flutter项目中使用GetIt和Riverpod进行依赖注入的优劣势。项目已完成从纯Riverpod依赖注入到GetIt+Riverpod混合架构的迁移，实现了更清晰的职责分离。
+
+## 项目架构演进
+
+### 迁移前：纯 Riverpod 架构
+
+- **依赖注入**：通过 Riverpod Provider
+- **状态管理**：通过 Riverpod Provider  
+- **数据模型**：混合使用 json_annotation + Equatable
+
+### 迁移后：GetIt + Riverpod + Freezed 架构
+
+- **依赖注入**：GetIt + Injectable 注解
+- **状态管理**：Riverpod (专注UI状态)
+- **数据模型**：统一使用 Freezed
+- **错误处理**：Freezed 联合类型
 
 ## 当前架构 (Riverpod + 自定义容器)
 
@@ -134,6 +149,37 @@ final userService = ref.watch(userServiceProvider);
 - **零开销**: 纯粹的服务定位器，无响应式开销
 - **单例管理**: 高效的单例模式，避免重复创建
 - **延迟加载**: 支持懒加载，按需创建实例
+
+#### 3. **Freezed集成** ⭐⭐⭐⭐⭐
+
+结合Freezed，项目获得了统一的数据模型管理：
+
+- **统一数据模型**: 所有模型使用Freezed，代码风格一致
+- **自动代码生成**: 自动生成`copyWith`、`==`、`hashCode`、`toString`
+- **联合类型**: 完美支持错误处理和状态管理
+- **JSON序列化**: 内置JSON支持，无需额外配置
+
+```dart
+// 数据模型 - 简洁强大
+@freezed
+abstract class User with _$User {
+  const factory User({
+    required String id,
+    required String email,
+    String? name,
+  }) = _User;
+  
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+// 错误处理 - 类型安全
+@freezed
+abstract class Failure with _$Failure {
+  const factory Failure.server({required String message}) = ServerFailure;
+  const factory Failure.network({required String message}) = NetworkFailure;
+}
+```
+
 - **内存友好**: 不维护复杂的依赖图和监听器
 
 #### 3. **测试友好** ⭐⭐⭐⭐⭐
@@ -339,4 +385,3 @@ GetIt相对于当前Riverpod依赖注入方案的主要优势：
 5. **可维护性**: 清晰的职责分离，更好的代码组织
 
 建议在项目中采用GetIt管理业务层依赖，Riverpod专注于UI状态管理，实现最佳的架构平衡。
-

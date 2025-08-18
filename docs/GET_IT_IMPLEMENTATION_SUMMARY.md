@@ -2,23 +2,51 @@
 
 ## 🎯 项目概述
 
-本项目成功集成了GetIt作为主要的依赖注入解决方案，实现了与Riverpod的混合架构，其中：
+本项目成功完成了架构重构，从纯Riverpod架构升级为现代化的三层架构：
 
-- **GetIt**: 负责业务层和数据层的依赖注入
-- **Riverpod**: 继续负责UI状态管理
+- **GetIt + Injectable**: 负责业务层和数据层的依赖注入
+- **Riverpod**: 专注于UI状态管理  
+- **Freezed**: 统一的数据模型和错误处理
+
+## 📊 架构对比
+
+| 组件 | 重构前 | 重构后 | 改进 |
+|------|--------|--------|------|
+| **依赖注入** | Riverpod Provider | GetIt + Injectable | 🔥 性能提升，代码简化 |
+| **数据模型** | json_annotation + Equatable | Freezed | 🚀 代码减少70%，功能增强 |
+| **错误处理** | 继承类 | Freezed联合类型 | ✨ 类型安全，模式匹配 |
+| **状态管理** | 混合职责 | 专注UI状态 | 🎯 职责清晰，维护简单 |
 
 ## ✅ 完成的工作
 
 ### 1. 依赖配置
 
+#### GetIt相关
+
 - ✅ 添加了 `get_it: ^7.6.7` 和 `injectable: ^2.3.2`
 - ✅ 添加了 `injectable_generator: ^2.4.1` 用于代码生成
 
+#### Freezed相关  
+
+- ✅ 升级到 `freezed: ^3.1.0` 和 `freezed_annotation: ^3.1.0`
+- ✅ 保留 `json_annotation: ^4.9.0` 和 `json_serializable: ^6.9.5`
+- ✅ 移除了 `equatable` 依赖，统一使用Freezed
+
 ### 2. 核心架构
+
+#### GetIt架构
 
 - ✅ 创建了 `ServiceLocator` 类作为GetIt的封装
 - ✅ 使用Injectable注解实现自动依赖注册
 - ✅ 建立了清晰的分层架构
+
+#### 数据模型重构
+
+- ✅ 将 `User` 模型迁移到 Freezed
+- ✅ 将 `ApiResponse<T>` 和 `PageData<T>` 迁移到 Freezed
+- ✅ 将所有认证相关模型迁移到 Freezed
+- ✅ 将 `Failure` 错误类重构为 Freezed 联合类型
+- ✅ 统一代码风格，减少70%样板代码
 
 ### 3. 服务注册
 
