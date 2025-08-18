@@ -10,11 +10,11 @@ import 'package:sky_eldercare_family/di/service_locator.config.dart';
 import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 /// 全局服务定位器实例
-final GetIt sl = GetIt.instance;
+final GetIt getIt = GetIt.instance;
 
 /// 依赖注入配置
 @InjectableInit()
-Future<void> configureDependencies() async => sl.init();
+Future<void> configureDependencies() async => getIt.init();
 
 /// 手动注册依赖（用于不使用injectable注解的类）
 @module
@@ -58,21 +58,21 @@ class ServiceLocator {
 
   /// 重置所有依赖（主要用于测试）
   static Future<void> reset() async {
-    await sl.reset();
+    await getIt.reset();
     AppLogger.info('GetIt依赖注入容器已重置');
   }
 
   /// 获取服务实例
-  static T get<T extends Object>() => sl.get<T>();
+  static T get<T extends Object>() => getIt.get<T>();
 
   /// 获取服务实例（可选参数）
-  static T? getOrNull<T extends Object>() => sl.isRegistered<T>() ? sl.get<T>() : null;
+  static T? getOrNull<T extends Object>() => getIt.isRegistered<T>() ? getIt.get<T>() : null;
 
   /// 检查服务是否已注册
-  static bool isRegistered<T extends Object>() => sl.isRegistered<T>();
+  static bool isRegistered<T extends Object>() => getIt.isRegistered<T>();
 
   /// 等待异步依赖准备就绪
-  static Future<T> getAsync<T extends Object>() => sl.getAsync<T>();
+  static Future<T> getAsync<T extends Object>() => getIt.getAsync<T>();
 }
 
 /// GetIt扩展方法，提供更便捷的访问方式

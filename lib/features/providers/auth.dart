@@ -71,7 +71,7 @@ class Auth extends _$Auth {
 
   /// 初始化认证状态
   Future<void> _initializeAuth() async {
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
 
     final result = await userService.getLocalAuthInfo();
     result.fold(
@@ -118,7 +118,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.login(request);
 
     result.fold(
@@ -152,7 +152,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.phoneLogin(request);
 
     result.fold(
@@ -186,7 +186,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.register(request);
 
     result.fold(
@@ -215,7 +215,7 @@ class Auth extends _$Auth {
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     await userService.logout();
 
     // 无论服务器登出是否成功，都要清除本地状态
@@ -234,7 +234,7 @@ class Auth extends _$Auth {
       return;
     }
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final request = RefreshTokenRequest(refreshToken: state.refreshToken!);
     final result = await userService.refreshToken(request);
 
@@ -270,7 +270,7 @@ class Auth extends _$Auth {
 
     state = state.copyWith(isLoading: true);
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.updateUser(user);
 
     result.fold(
@@ -297,7 +297,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.resetPassword(request);
 
     result.fold(
@@ -323,7 +323,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.changePassword(request);
 
     result.fold(
@@ -349,7 +349,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.sendVerificationCode(request);
 
     result.fold(
@@ -375,7 +375,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     final result = await userService.verifyCode(request);
 
     result.fold(

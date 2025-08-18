@@ -187,11 +187,11 @@ abstract class Failure with _$Failure {
 ```dart
 // GetIt测试 - 简单直接
 setUp(() {
-  sl.registerSingleton<UserService>(mockUserService);
+  getIt.registerSingleton<UserService>(mockUserService);
 });
 
 tearDown(() {
-  sl.reset();
+  getIt.reset();
 });
 
 // Riverpod测试 - 需要Provider覆盖
@@ -215,13 +215,13 @@ testWidgets('test', (tester) async {
 class ApiClient {}
 
 // 手动注册 - 更灵活
-sl.registerSingleton<UserService>(UserServiceImpl());
+getIt.registerSingleton<UserService>(UserServiceImpl());
 
 // 工厂注册 - 每次创建新实例
-sl.registerFactory<MyService>(() => MyService());
+getIt.registerFactory<MyService>(() => MyService());
 
 // 延迟单例 - 首次使用时创建
-sl.registerLazySingleton<DatabaseService>(() => DatabaseService());
+getIt.registerLazySingleton<DatabaseService>(() => DatabaseService());
 ```
 
 #### 5. **环境隔离** ⭐⭐⭐⭐
@@ -341,7 +341,7 @@ dev_dependencies:
 final GetIt sl = GetIt.instance;
 
 @InjectableInit()
-Future<void> configureDependencies() async => sl.init();
+Future<void> configureDependencies() async => getIt.init();
 ```
 
 ### 3. 添加注解到服务类

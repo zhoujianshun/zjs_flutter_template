@@ -7,7 +7,7 @@ class GetItUsageExamples {
   /// 示例1: 在Service中使用GetIt
   static void serviceExample() {
     // 直接获取依赖，无需context或ref
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
 
     // 使用服务
     userService.getCurrentUser().then(
@@ -23,7 +23,7 @@ class GetItUsageExamples {
     return Builder(
       builder: (context) {
         // 在Widget中直接获取服务
-        final userService = sl<UserService>();
+        final userService = getIt<UserService>();
 
         return FutureBuilder(
           future: userService.getCurrentUser().then(
@@ -53,7 +53,7 @@ class GetItUsageExamples {
 /// 示例业务逻辑类
 class OrderService {
   // 构造函数中获取依赖
-  OrderService() : _userService = sl<UserService>();
+  OrderService() : _userService = getIt<UserService>();
 
   final UserService _userService;
 
@@ -87,7 +87,7 @@ class PerformanceComparison {
     final stopwatch = Stopwatch()..start();
 
     for (var i = 0; i < 10000; i++) {
-      final userService = sl<UserService>(); // 直接获取，O(1)复杂度
+      final userService = getIt<UserService>(); // 直接获取，O(1)复杂度
       // 使用服务...
       userService.toString(); // 避免unused warning
     }

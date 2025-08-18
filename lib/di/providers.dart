@@ -6,11 +6,12 @@ import 'package:sky_eldercare_family/core/utils/logger.dart';
 import 'package:sky_eldercare_family/di/service_locator.dart';
 
 /// Core providers for dependency injection
-/// 基础服务提供者
+/// 基础服务提供者 - 桥接 GetIt 和 Riverpod
+/// GetIt 负责依赖注入，Riverpod 负责状态管理
 class AppProviders {
   /// 网络服务提供者
   static final networkInfoProvider = Provider<NetworkInfo>((ref) {
-    return ServiceLocator.get<NetworkInfo>();
+    return getIt<NetworkInfo>();
   });
 
   /// 网络状态提供者
@@ -27,14 +28,15 @@ class AppProviders {
     );
   });
 
+  /// API客户端提供者
   static final apiClientProvider = Provider<ApiClient>((ref) {
     AppLogger.info('Creating ApiClient instance');
-    return ServiceLocator.get<ApiClient>();
+    return getIt<ApiClient>();
   });
 
-  /// Storage related providers
+  /// 存储服务提供者
   static final storageServiceProvider = Provider<StorageService>((ref) {
-    return ServiceLocator.get<StorageService>();
+    return getIt<StorageService>();
   });
 
   // /// Authentication related providers

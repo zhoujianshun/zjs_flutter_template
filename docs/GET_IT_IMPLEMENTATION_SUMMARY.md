@@ -97,7 +97,7 @@ final userService = sl<UserService>();
 final authRepository = sl<AuthRepository>();
 
 // 使用扩展方法
-final apiClient = sl.apiClient;
+final apiClient = getIt.apiClient;
 ```
 
 ## 🚀 主要优势
@@ -119,7 +119,7 @@ final apiClient = sl.apiClient;
 ```dart
 // 简单的Mock设置
 setUp(() {
-  sl.registerSingleton<UserService>(mockUserService);
+  getIt.registerSingleton<UserService>(mockUserService);
 });
 ```
 

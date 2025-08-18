@@ -46,7 +46,7 @@ lib/
 ├── di/                      # 🔧 依赖注入配置
 │   ├── service_locator.dart # GetIt 容器配置
 │   ├── service_locator.config.dart # GetIt 生成文件
-│   ├── injection_container.dart # 依赖注入容器
+
 │   └── providers.dart       # Riverpod Providers
 ├── core/                    # 🏗️ 核心基础设施
 │   ├── constants/          # 应用常量

@@ -48,9 +48,9 @@ final authRepository = sl<AuthRepository>();
 final apiClient = sl<ApiClient>();
 
 // 使用扩展方法（更简洁）
-final userService = sl.userService;
-final authRepository = sl.authRepository;
-final apiClient = sl.apiClient;
+final userService = getIt.userService;
+final authRepository = getIt.authRepository;
+final apiClient = getIt.apiClient;
 ```
 
 ### 2. 在Widget中使用
@@ -181,8 +181,8 @@ void main() {
 ```dart
 testWidgets('should display user info', (tester) async {
   // 设置Mock服务
-  sl.reset();
-  sl.registerSingleton<UserService>(MockUserService());
+  getIt.reset();
+  getIt.registerSingleton<UserService>(MockUserService());
   
   await tester.pumpWidget(MyApp());
   
@@ -240,7 +240,7 @@ class OrderService {
 
 ```dart
 // ✅ 检查服务是否注册
-if (sl.isRegistered<MyService>()) {
+if (getIt.isRegistered<MyService>()) {
   final service = sl<MyService>();
   // 使用服务
 }
@@ -307,8 +307,8 @@ final currentUserProvider = FutureProvider<User?>((ref) async {
 
 ```dart
 setUp(() {
-  sl.reset();
-  sl.registerSingleton<UserService>(MockUserService());
+  getIt.reset();
+  getIt.registerSingleton<UserService>(MockUserService());
 });
 ```
 
@@ -367,4 +367,3 @@ GetIt为项目带来了：
 - **清晰的架构**: 业务逻辑与UI状态管理职责分离
 
 通过GetIt + Riverpod的混合架构，我们获得了两者的优势：GetIt的简单高效用于依赖注入，Riverpod的响应式特性用于UI状态管理。
-

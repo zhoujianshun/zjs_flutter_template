@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sky_eldercare_family/config/language/app_language.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sky_eldercare_family/config/routes/app_router.dart';
 import 'package:sky_eldercare_family/config/themes/app_theme.dart';
-// import 'package:sky_eldercare_family/di/injection_container.dart';
 import 'package:sky_eldercare_family/di/service_locator.dart';
-// import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 
 void main() async {
