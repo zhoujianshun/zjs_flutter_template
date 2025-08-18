@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/config/routes/route_paths.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/validators.dart';
+import 'package:sky_eldercare_family/features/providers/auth.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
+import 'package:sky_eldercare_family/shared/models/auth_models.dart';
 import 'package:sky_eldercare_family/shared/widgets/loading_button.dart';
 
 /// 登录页面
@@ -20,7 +21,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  bool _isLoading = false;
+  bool _rememberMe = false;
   bool _obscurePassword = true;
 
   @override
@@ -36,38 +37,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
+    final request = LoginRequest(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      rememberMe: _rememberMe,
+    );
 
-    try {
-      // 模拟登录API调用
-      await Future.delayed(const Duration(seconds: 2), () {});
+    await ref.read(authProvider.notifier).login(request);
 
-      // 保存用户token (模拟)
-      await StorageService.instance.setUserToken('mock_user_token_12345');
-
-      // 保存用户信息 (模拟)
-      await StorageService.instance.setUserData('user_email', _emailController.text);
-
-      if (!mounted) return;
-
-      // 跳转到首页
-      context.go(RoutePaths.home);
-    } catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('登录失败: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
+    // 检查登录结果
+    final authState = ref.read(authProvider);
+    if (authState.isAuthenticated) {
+      // 登录成功，导航到主页
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        context.go(RoutePaths.home);
+      }
+    } else if (authState.hasError) {
+      // 显示错误信息
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(authState.errorMessage ?? '登录失败'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }
@@ -76,6 +69,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final authState = ref.watch(authProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -179,18 +173,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                 const SizedBox(height: 8),
 
-                // 忘记密码
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // 处理忘记密码
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('忘记密码功能待开发')),
-                      );
-                    },
-                    child: Text(l10n.auth_forgot_password),
-                  ),
+                // 记住我和忘记密码
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          _rememberMe = value ?? false;
+                        });
+                      },
+                    ),
+                    const Text('记住我'),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        // 处理忘记密码
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('忘记密码功能待开发')),
+                        );
+                      },
+                      child: Text(l10n.auth_forgot_password),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 32),
@@ -198,7 +203,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // 登录按钮
                 LoadingButton(
                   onPressed: _handleLogin,
-                  isLoading: _isLoading,
+                  isLoading: authState.isLoading,
                   child: Text(
                     l10n.auth_login,
                     style: const TextStyle(
@@ -212,7 +217,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                 // 注册按钮
                 OutlinedButton(
-                  onPressed: _isLoading
+                  onPressed: authState.isLoading
                       ? null
                       : () {
                           // 处理注册
@@ -222,6 +227,47 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         },
                   child: Text(l10n.auth_register),
                 ),
+
+                const SizedBox(height: 16),
+
+                // 错误信息显示
+                if (authState.hasError) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.red.withOpacity(0.3)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            authState.errorMessage!,
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            ref.read(authProvider.notifier).clearError();
+                          },
+                          iconSize: 20,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
 
                 const SizedBox(height: 32),
 

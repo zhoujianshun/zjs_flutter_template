@@ -4,27 +4,27 @@ import 'package:sky_eldercare_family/core/errors/error_utils.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/errors/failures.dart';
 import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/di/providers.dart';
 import 'package:sky_eldercare_family/shared/models/api_response.dart';
+import 'package:sky_eldercare_family/shared/models/auth_models.dart';
 import 'package:sky_eldercare_family/shared/models/user.dart';
 
 /// 用户服务接口
 abstract class UserService {
   /// 手机号登录
-  Future<Either<Failure, User>> phoneLogin({
+  Future<Either<Failure, UserLoginResult>> phoneLogin({
     required String phone,
     required String code,
   });
 
   /// 登录
-  Future<Either<Failure, User>> login({
+  Future<Either<Failure, UserLoginResult>> login({
     required String email,
     required String password,
   });
 
   /// 注册
-  Future<Either<Failure, User>> register({
+  Future<Either<Failure, UserLoginResult>> register({
     required String email,
     required String password,
     String? name,
@@ -62,7 +62,7 @@ class UserServiceImpl implements UserService {
   final ApiClient _apiClient;
 
   @override
-  Future<Either<Failure, User>> login({
+  Future<Either<Failure, UserLoginResult>> login({
     required String email,
     required String password,
   }) async {
@@ -85,11 +85,8 @@ class UserServiceImpl implements UserService {
         final user = User.fromJson(userData['user'] as Map<String, dynamic>);
         final token = userData['token'] as String;
 
-        // 保存用户token和信息
-        await StorageService.instance.setUserToken(token);
-        await StorageService.instance.setUserData('user_info', user.toJson());
-
-        return Right(user);
+        // 返回用户和token信息，让Repository层决定如何存储
+        return Right(UserLoginResult(user: user, token: token));
       } else {
         return Left(AuthFailure(message: apiResponse.message));
       }
@@ -101,7 +98,7 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<Either<Failure, User>> register({
+  Future<Either<Failure, UserLoginResult>> register({
     required String email,
     required String password,
     String? name,
@@ -128,11 +125,8 @@ class UserServiceImpl implements UserService {
         final user = User.fromJson(userData['user'] as Map<String, dynamic>);
         final token = userData['token'] as String;
 
-        // 保存用户token和信息
-        await StorageService.instance.setUserToken(token);
-        await StorageService.instance.setUserData('user_info', user.toJson());
-
-        return Right(user);
+        // 返回用户和token信息，让Repository层决定如何存储
+        return Right(UserLoginResult(user: user, token: token));
       } else {
         return Left(AuthFailure(message: apiResponse.message));
       }
@@ -146,14 +140,7 @@ class UserServiceImpl implements UserService {
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
     try {
-      // 先从本地缓存获取
-      final cachedUserData = StorageService.instance.getUserData<Map<String, dynamic>>('user_info');
-      if (cachedUserData != null) {
-        final user = User.fromJson(cachedUserData);
-        return Right(user);
-      }
-
-      // 如果本地没有，从服务器获取
+      // 直接从服务器获取，缓存逻辑由Repository层处理
       final response = await _apiClient.get('/user/profile');
 
       final apiResponse = ApiResponse<Map<String, dynamic>>.fromJson(
@@ -163,10 +150,6 @@ class UserServiceImpl implements UserService {
 
       if (apiResponse.isSuccess && apiResponse.hasData) {
         final user = User.fromJson(apiResponse.data!);
-
-        // 缓存用户信息
-        await StorageService.instance.setUserData('user_info', user.toJson());
-
         return Right(user);
       } else {
         return Left(ServerFailure(message: apiResponse.message));
@@ -207,9 +190,7 @@ class UserServiceImpl implements UserService {
       if (apiResponse.isSuccess && apiResponse.hasData) {
         final user = User.fromJson(apiResponse.data!);
 
-        // 更新本地缓存
-        await StorageService.instance.setUserData('user_info', user.toJson());
-
+        // 只返回更新后的用户信息，缓存更新由Repository层处理
         return Right(user);
       } else {
         return Left(ServerFailure(message: apiResponse.message));
@@ -257,10 +238,7 @@ class UserServiceImpl implements UserService {
     try {
       await _apiClient.post('/auth/logout');
 
-      // 清除本地数据
-      await StorageService.instance.removeUserToken();
-      await StorageService.instance.clearUserData();
-
+      // 只负责API调用，数据清理由Repository层处理
       return const Right(true);
     } on AppException catch (e) {
       return Left(mapExceptionToFailure(e));
@@ -282,9 +260,7 @@ class UserServiceImpl implements UserService {
       if (apiResponse.isSuccess && apiResponse.hasData) {
         final token = apiResponse.data!['token'] as String;
 
-        // 保存新token
-        await StorageService.instance.setUserToken(token);
-
+        // 只返回新token，存储由Repository层处理
         return Right(token);
       } else {
         return Left(AuthFailure(message: apiResponse.message));
@@ -297,9 +273,36 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<Either<Failure, User>> phoneLogin({required String phone, required String code}) {
-    // TODO: implement phoneLogin
-    throw UnimplementedError();
+  Future<Either<Failure, UserLoginResult>> phoneLogin({required String phone, required String code}) async {
+    try {
+      final response = await _apiClient.post(
+        '/auth/phone-login',
+        data: {
+          'phone': phone,
+          'code': code,
+        },
+      );
+
+      final apiResponse = ApiResponse<Map<String, dynamic>>.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => json! as Map<String, dynamic>,
+      );
+
+      if (apiResponse.isSuccess && apiResponse.hasData) {
+        final userData = apiResponse.data!;
+        final user = User.fromJson(userData['user'] as Map<String, dynamic>);
+        final token = userData['token'] as String;
+
+        // 返回用户和token信息，让Repository层决定如何存储
+        return Right(UserLoginResult(user: user, token: token));
+      } else {
+        return Left(AuthFailure(message: apiResponse.message));
+      }
+    } on AppException catch (e) {
+      return Left(mapExceptionToFailure(e));
+    } catch (e) {
+      return Left(UnknownFailure(message: e.toString()));
+    }
   }
 }
 

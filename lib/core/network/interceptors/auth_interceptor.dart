@@ -127,5 +127,7 @@ class AuthInterceptor extends Interceptor {
     await _secureStorage.removeUserToken();
     await _secureStorage.clearUserData();
     AppLogger.info('Cleared stored tokens');
+
+    // 使用 go_router 跳转到登录页面
   }
 }
