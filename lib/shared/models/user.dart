@@ -1,66 +1,28 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'user.freezed.dart';
 part 'user.g.dart';
 
 /// 用户数据模型
-@JsonSerializable()
-class User extends Equatable {
-  const User({
-    required this.id,
-    required this.email,
-    required this.createdAt,
-    this.phone,
-    this.name,
-    this.avatar,
-    this.birthday,
-    this.gender,
-    this.role = UserRole.user,
-    this.updatedAt,
-  });
-
-  /// 从JSON创建User对象
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  final String id;
-  final String email;
-  final String? phone;
-  final String? name;
-  final String? avatar;
-  final DateTime? birthday;
-  final String? gender;
-  final UserRole? role;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-
-  /// 转换为JSON
-  Map<String, dynamic> toJson() => _$UserToJson(this);
-
-  /// 复制并修改部分属性
-  User copyWith({
-    String? id,
-    String? email,
+@freezed
+abstract class User with _$User {
+  const factory User({
+    required String id,
+    required String email,
+    DateTime? createdAt,
     String? phone,
     String? name,
     String? avatar,
     DateTime? birthday,
     String? gender,
-    UserRole? role,
-    DateTime? createdAt,
+    @Default(UserRole.user) UserRole role,
     DateTime? updatedAt,
-  }) {
-    return User(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      name: name ?? this.name,
-      avatar: avatar ?? this.avatar,
-      birthday: birthday ?? this.birthday,
-      gender: gender ?? this.gender,
-      role: role ?? this.role,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
-  }
+  }) = _User;
+
+  const User._();
+
+  /// 从JSON创建User对象
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// 获取显示名称
   String get displayName {
@@ -79,25 +41,6 @@ class User extends Equatable {
 
   /// 是否为普通用户
   bool get isUser => role == UserRole.user;
-
-  @override
-  List<Object?> get props => [
-        id,
-        email,
-        phone,
-        name,
-        avatar,
-        birthday,
-        gender,
-        role,
-        createdAt,
-        updatedAt,
-      ];
-
-  @override
-  String toString() {
-    return 'User(id: $id, email: $email, name: $name, role: $role)';
-  }
 }
 
 /// 用户角色枚举

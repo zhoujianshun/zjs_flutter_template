@@ -7,7 +7,6 @@ import 'package:sky_eldercare_family/core/network/network_info.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
 import 'package:sky_eldercare_family/di/service_locator.config.dart';
-import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
 import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 /// 全局服务定位器实例
@@ -89,7 +88,4 @@ extension GetItExtensions on GetIt {
 
   /// 快速获取用户服务
   UserService get userService => get<UserService>();
-
-  /// 快速获取认证仓库
-  AuthRepository get authRepository => get<AuthRepository>();
 }

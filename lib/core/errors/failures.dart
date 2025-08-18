@@ -1,71 +1,49 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-/// 抽象失败类
-abstract class Failure extends Equatable {
-  final String message;
-  final int? code;
-  
-  const Failure({
-    required this.message,
-    this.code,
-  });
-  
-  @override
-  List<Object?> get props => [message, code];
-}
+part 'failures.freezed.dart';
 
-/// 服务器错误
-class ServerFailure extends Failure {
-  const ServerFailure({
-    required super.message,
-    super.code,
-  });
-}
+/// 失败类型的联合类型
+@freezed
+abstract class Failure with _$Failure {
+  /// 服务器错误
+  const factory Failure.server({
+    required String message,
+    @Default(500) int code,
+  }) = ServerFailure;
 
-/// 网络连接错误
-class NetworkFailure extends Failure {
-  const NetworkFailure({
-    required super.message,
-    super.code,
-  });
-}
+  /// 网络错误
+  const factory Failure.network({
+    required String message,
+    @Default(-1) int code,
+  }) = NetworkFailure;
 
-/// 缓存错误
-class CacheFailure extends Failure {
-  const CacheFailure({
-    required super.message,
-    super.code,
-  });
-}
+  /// 缓存错误
+  const factory Failure.cache({
+    required String message,
+    @Default(-2) int code,
+  }) = CacheFailure;
 
-/// 验证错误
-class ValidationFailure extends Failure {
-  const ValidationFailure({
-    required super.message,
-    super.code,
-  });
-}
+  /// 验证错误
+  const factory Failure.validation({
+    required String message,
+    @Default(400) int code,
+  }) = ValidationFailure;
 
-/// 权限错误
-class PermissionFailure extends Failure {
-  const PermissionFailure({
-    required super.message,
-    super.code,
-  });
-}
+  /// 认证错误
+  const factory Failure.auth({
+    required String message,
+    @Default(401) int code,
+  }) = AuthFailure;
 
-/// 认证错误
-class AuthFailure extends Failure {
-  const AuthFailure({
-    required super.message,
-    super.code,
-  });
-}
+  /// 权限错误
+  const factory Failure.permission({
+    required String message,
+    @Default(403) int code,
+  }) = PermissionFailure;
 
-/// 未知错误
-class UnknownFailure extends Failure {
-  const UnknownFailure({
-    required super.message,
-    super.code,
-  });
+  /// 未知错误
+  const factory Failure.unknown({
+    required String message,
+    @Default(-999) int code,
+  }) = UnknownFailure;
 }

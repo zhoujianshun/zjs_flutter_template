@@ -16,10 +16,7 @@ import 'package:sky_eldercare_family/core/network/network_info.dart' as _i356;
 import 'package:sky_eldercare_family/core/storage/storage_service.dart'
     as _i540;
 import 'package:sky_eldercare_family/di/service_locator.dart' as _i40;
-import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart'
-    as _i462;
-import 'package:sky_eldercare_family/shared/repositories/auth_repository_impl.dart'
-    as _i647;
+import 'package:sky_eldercare_family/shared/apis/user_api.dart' as _i633;
 import 'package:sky_eldercare_family/shared/services/user_service.dart'
     as _i454;
 
@@ -41,10 +38,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i557.ApiClient>(() => registerModule.apiClient);
     gh.singleton<_i356.NetworkInfo>(() => _i356.NetworkInfo());
-    gh.singleton<_i454.UserService>(
-        () => _i454.UserServiceImpl(gh<_i557.ApiClient>()));
-    gh.singleton<_i462.AuthRepository>(() => _i647.AuthRepositoryImpl(
-          userService: gh<_i454.UserService>(),
+    gh.factory<_i633.UserAPI>(() => _i633.UserAPI(gh<_i557.ApiClient>()));
+    gh.singleton<_i454.UserService>(() => _i454.UserServiceImpl(
+          userApi: gh<_i633.UserAPI>(),
           storageService: gh<_i540.StorageService>(),
         ));
     return this;

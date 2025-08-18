@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sky_eldercare_family/di/service_locator.dart';
 import 'package:sky_eldercare_family/shared/models/auth_models.dart';
 import 'package:sky_eldercare_family/shared/models/user.dart';
-import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
+import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 part 'auth.freezed.dart';
 part 'auth.g.dart';
@@ -71,9 +71,9 @@ class Auth extends _$Auth {
 
   /// 初始化认证状态
   Future<void> _initializeAuth() async {
-    final authRepository = sl<AuthRepository>();
+    final userService = sl<UserService>();
 
-    final result = await authRepository.getLocalAuthInfo();
+    final result = await userService.getLocalAuthInfo();
     result.fold(
       (failure) {
         // 获取本地认证信息失败，设置为未认证状态
@@ -118,8 +118,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.login(request);
+    final userService = sl<UserService>();
+    final result = await userService.login(request);
 
     result.fold(
       (failure) {
@@ -152,8 +152,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.phoneLogin(request);
+    final userService = sl<UserService>();
+    final result = await userService.phoneLogin(request);
 
     result.fold(
       (failure) {
@@ -186,8 +186,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.register(request);
+    final userService = sl<UserService>();
+    final result = await userService.register(request);
 
     result.fold(
       (failure) {
@@ -215,8 +215,8 @@ class Auth extends _$Auth {
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
 
-    final authRepository = sl<AuthRepository>();
-    await authRepository.logout();
+    final userService = sl<UserService>();
+    await userService.logout();
 
     // 无论服务器登出是否成功，都要清除本地状态
     state = const AuthState(
@@ -234,9 +234,9 @@ class Auth extends _$Auth {
       return;
     }
 
-    final authRepository = sl<AuthRepository>();
+    final userService = sl<UserService>();
     final request = RefreshTokenRequest(refreshToken: state.refreshToken!);
-    final result = await authRepository.refreshToken(request);
+    final result = await userService.refreshToken(request);
 
     result.fold(
       (failure) {
@@ -270,8 +270,8 @@ class Auth extends _$Auth {
 
     state = state.copyWith(isLoading: true);
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.updateUser(user);
+    final userService = sl<UserService>();
+    final result = await userService.updateUser(user);
 
     result.fold(
       (failure) {
@@ -297,8 +297,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.resetPassword(request);
+    final userService = sl<UserService>();
+    final result = await userService.resetPassword(request);
 
     result.fold(
       (failure) {
@@ -323,8 +323,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.changePassword(request);
+    final userService = sl<UserService>();
+    final result = await userService.changePassword(request);
 
     result.fold(
       (failure) {
@@ -349,8 +349,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.sendVerificationCode(request);
+    final userService = sl<UserService>();
+    final result = await userService.sendVerificationCode(request);
 
     result.fold(
       (failure) {
@@ -375,8 +375,8 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = sl<AuthRepository>();
-    final result = await authRepository.verifyCode(request);
+    final userService = sl<UserService>();
+    final result = await userService.verifyCode(request);
 
     result.fold(
       (failure) {

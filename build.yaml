@@ -13,10 +13,20 @@ targets:
           # 生成通用工厂构造函数
           generic_argument_factories: true
 
-      hive_generator:
+      # hive_generator:
+      #   options:
+      #     # Hive 配置选项
+      #     auto_dispose: true
+
+      injectable_generator:injectable_builder:
         options:
-          # Hive 配置选项
-          auto_dispose: true
+          auto_register: true
+          # auto registers any class with a name matches the given pattern
+          # class_name_pattern:
+          #   "Bloc$"
+          # auto registers any class inside a file with a
+          # name matches the given pattern
+          file_name_pattern: '_api$|_bloc$'
 
 # 全局选项
 global_options:

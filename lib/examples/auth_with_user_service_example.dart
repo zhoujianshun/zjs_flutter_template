@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sky_eldercare_family/features/providers/auth.dart';
 import 'package:sky_eldercare_family/shared/models/auth_models.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 /// Auth + UserService 集成使用示例
 class AuthWithUserServiceExamplePage extends ConsumerStatefulWidget {
@@ -30,7 +29,7 @@ class _AuthWithUserServiceExamplePageState extends ConsumerState<AuthWithUserSer
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
-    final currentUserAsync = ref.watch(currentUserProvider);
+    // final currentUserAsync = ref.watch(currentUserProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,11 +77,11 @@ class _AuthWithUserServiceExamplePageState extends ConsumerState<AuthWithUserSer
               ),
             ] else ...[
               // 用户信息显示
-              currentUserAsync.when(
-                data: (user) => user != null ? _UserInfoCard(user: user) : const Text('用户信息加载失败'),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => Text('错误: $error'),
-              ),
+              // currentUserAsync.when(
+              //   data: (user) => user != null ? _UserInfoCard(user: user) : const Text('用户信息加载失败'),
+              //   loading: () => const Center(child: CircularProgressIndicator()),
+              //   error: (error, stack) => Text('错误: $error'),
+              // ),
 
               const SizedBox(height: 16),
 

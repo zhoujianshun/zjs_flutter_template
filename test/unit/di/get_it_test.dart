@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sky_eldercare_family/core/network/api_client.dart';
 import 'package:sky_eldercare_family/core/network/network_info.dart';
 import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
 import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 void main() {
@@ -53,26 +52,20 @@ void main() {
 
     test('should register and resolve AuthRepository', () {
       // 验证AuthRepository是否正确注册
-      expect(ServiceLocator.isRegistered<AuthRepository>(), isTrue);
+      expect(ServiceLocator.isRegistered<UserService>(), isTrue);
 
       // 获取实例
-      final authRepository = ServiceLocator.get<AuthRepository>();
-      expect(authRepository, isNotNull);
-      expect(authRepository, isA<AuthRepository>());
+      final userService = ServiceLocator.get<UserService>();
+      expect(userService, isNotNull);
+      expect(userService, isA<UserService>());
     });
 
     test('should handle dependency injection correctly', () {
       // 获取UserService，它依赖于ApiClient
       final userService = ServiceLocator.get<UserService>();
       expect(userService, isNotNull);
-
-      // 获取AuthRepository，它依赖于UserService和StorageService
-      final authRepository = ServiceLocator.get<AuthRepository>();
-      expect(authRepository, isNotNull);
-
       // 验证依赖注入正常工作
       expect(userService, isA<UserService>());
-      expect(authRepository, isA<AuthRepository>());
     });
 
     test('should return null for unregistered services', () {
@@ -86,9 +79,7 @@ void main() {
       // 测试扩展方法
       expect(sl.apiClient, isNotNull);
       expect(sl.userService, isNotNull);
-      expect(sl.authRepository, isNotNull);
       expect(sl.networkInfo, isNotNull);
     });
   });
 }
-

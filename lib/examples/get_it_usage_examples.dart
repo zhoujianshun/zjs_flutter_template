@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sky_eldercare_family/di/service_locator.dart';
-import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
 import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 /// GetIt使用示例
@@ -9,11 +8,14 @@ class GetItUsageExamples {
   static void serviceExample() {
     // 直接获取依赖，无需context或ref
     final userService = sl<UserService>();
-    final authRepository = sl<AuthRepository>();
 
     // 使用服务
-    userService.getCurrentUser();
-    authRepository.getLocalAuthInfo();
+    userService.getCurrentUser().then(
+          (result) => result.fold(
+            (failure) => null,
+            (user) => user,
+          ),
+        );
   }
 
   /// 示例2: 在Widget中使用GetIt
@@ -51,16 +53,13 @@ class GetItUsageExamples {
 /// 示例业务逻辑类
 class OrderService {
   // 构造函数中获取依赖
-  OrderService()
-      : _userService = sl<UserService>(),
-        _authRepository = sl<AuthRepository>();
+  OrderService() : _userService = sl<UserService>();
 
   final UserService _userService;
-  final AuthRepository _authRepository;
 
   Future<void> createOrder() async {
     // 检查用户认证
-    final authResult = await _authRepository.getLocalAuthInfo();
+    final authResult = await _userService.getLocalAuthInfo();
 
     authResult.fold(
       (failure) => throw Exception('用户未认证'),
@@ -97,4 +96,3 @@ class PerformanceComparison {
     print('GetIt获取10000次服务耗时: ${stopwatch.elapsedMicroseconds}μs');
   }
 }
-
