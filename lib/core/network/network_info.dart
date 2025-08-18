@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:injectable/injectable.dart';
 
 /// 网络状态枚举
 enum NetworkStatus {
@@ -7,6 +8,7 @@ enum NetworkStatus {
 }
 
 /// 网络服务 - 管理网络连接状态
+@singleton
 class NetworkInfo {
   factory NetworkInfo() => _instance;
   NetworkInfo._();

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 import 'package:sky_eldercare_family/generated/l10n/app_localizations.dart';
 
 /// 启动页面
@@ -68,8 +69,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
 
     if (!mounted) return;
 
+    final storageService = ServiceLocator.get<StorageService>();
     // 检查用户登录状态
-    final isLoggedIn = await StorageService.instance.isLoggedIn();
+    final isLoggedIn = await storageService.isLoggedIn();
 
     if (!mounted) return;
 

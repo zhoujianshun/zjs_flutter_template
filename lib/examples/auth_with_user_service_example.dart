@@ -391,10 +391,10 @@ class _UserInfoCard extends StatelessWidget {
             const SizedBox(height: 16),
             ListTile(
               leading: CircleAvatar(
-                child: Text(user.avatarInitial),
+                child: Text(user.avatarInitial as String),
               ),
-              title: Text(user.displayName),
-              subtitle: Text(user.email),
+              title: Text(user.displayName as String),
+              subtitle: Text(user.email as String),
             ),
             const Divider(),
             Text('ID: ${user.id}'),
@@ -450,16 +450,16 @@ class _UserActionsCard extends ConsumerWidget {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () async {
-                final userService = ref.read(userServiceProvider);
-                final result = await userService.getCurrentUser();
-                result.fold(
-                  (failure) => ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('获取用户信息失败: ${failure.message}')),
-                  ),
-                  (user) => ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('用户信息已更新: ${user.displayName}')),
-                  ),
-                );
+                // final userService = ref.read(userServiceProvider);
+                // final result = await userService.getCurrentUser();
+                // result.fold(
+                //   (failure) => ScaffoldMessenger.of(context).showSnackBar(
+                //     SnackBar(content: Text('获取用户信息失败: ${failure.message}')),
+                //   ),
+                //   (user) => ScaffoldMessenger.of(context).showSnackBar(
+                //     SnackBar(content: Text('用户信息已更新: ${user.displayName}')),
+                //   ),
+                // );
               },
               child: const Text('刷新用户信息'),
             ),

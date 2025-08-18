@@ -6,7 +6,7 @@ part 'auth_models.g.dart';
 
 /// 登录请求模型
 @freezed
-class LoginRequest with _$LoginRequest {
+abstract class LoginRequest with _$LoginRequest {
   const factory LoginRequest({
     required String email,
     required String password,
@@ -18,7 +18,7 @@ class LoginRequest with _$LoginRequest {
 
 /// 手机号登录请求模型
 @freezed
-class PhoneLoginRequest with _$PhoneLoginRequest {
+abstract class PhoneLoginRequest with _$PhoneLoginRequest {
   const factory PhoneLoginRequest({
     required String phone,
     required String code,
@@ -30,7 +30,7 @@ class PhoneLoginRequest with _$PhoneLoginRequest {
 
 /// 注册请求模型
 @freezed
-class RegisterRequest with _$RegisterRequest {
+abstract class RegisterRequest with _$RegisterRequest {
   const factory RegisterRequest({
     required String email,
     required String password,
@@ -44,7 +44,7 @@ class RegisterRequest with _$RegisterRequest {
 
 /// 重置密码请求模型
 @freezed
-class ResetPasswordRequest with _$ResetPasswordRequest {
+abstract class ResetPasswordRequest with _$ResetPasswordRequest {
   const factory ResetPasswordRequest({
     required String email,
   }) = _ResetPasswordRequest;
@@ -54,7 +54,7 @@ class ResetPasswordRequest with _$ResetPasswordRequest {
 
 /// 修改密码请求模型
 @freezed
-class ChangePasswordRequest with _$ChangePasswordRequest {
+abstract class ChangePasswordRequest with _$ChangePasswordRequest {
   const factory ChangePasswordRequest({
     required String oldPassword,
     required String newPassword,
@@ -66,7 +66,7 @@ class ChangePasswordRequest with _$ChangePasswordRequest {
 
 /// 认证响应模型
 @freezed
-class AuthResponse with _$AuthResponse {
+abstract class AuthResponse with _$AuthResponse {
   const factory AuthResponse({
     required String accessToken,
     required String refreshToken,
@@ -80,7 +80,7 @@ class AuthResponse with _$AuthResponse {
 
 /// 用户登录结果模型（Service层返回）
 @freezed
-class UserLoginResult with _$UserLoginResult {
+abstract class UserLoginResult with _$UserLoginResult {
   const factory UserLoginResult({
     required User user,
     required String token,
@@ -91,7 +91,7 @@ class UserLoginResult with _$UserLoginResult {
 
 /// 刷新token请求模型
 @freezed
-class RefreshTokenRequest with _$RefreshTokenRequest {
+abstract class RefreshTokenRequest with _$RefreshTokenRequest {
   const factory RefreshTokenRequest({
     required String refreshToken,
   }) = _RefreshTokenRequest;
@@ -101,7 +101,7 @@ class RefreshTokenRequest with _$RefreshTokenRequest {
 
 /// 验证码请求模型
 @freezed
-class VerificationCodeRequest with _$VerificationCodeRequest {
+abstract class VerificationCodeRequest with _$VerificationCodeRequest {
   const factory VerificationCodeRequest({
     required String email,
     required VerificationCodeType type,
@@ -112,7 +112,7 @@ class VerificationCodeRequest with _$VerificationCodeRequest {
 
 /// 验证码验证模型
 @freezed
-class VerifyCodeRequest with _$VerifyCodeRequest {
+abstract class VerifyCodeRequest with _$VerifyCodeRequest {
   const factory VerifyCodeRequest({
     required String email,
     required String code,

@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:sky_eldercare_family/core/constants/app_constants.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/network/interceptors/auth_interceptor.dart';
 
 /// API客户端 - 统一网络请求管理
+
 class ApiClient {
-  ApiClient() {
+  ApiClient(BaseOptions options) {
     _dio = Dio();
-    _setupDio();
+    _setupDio(options);
   }
 
   late final Dio _dio;
@@ -17,12 +17,12 @@ class ApiClient {
   Dio get dio => _dio;
 
   /// 配置Dio实例
-  void _setupDio() {
+  void _setupDio(BaseOptions options) {
     // 基础配置
     _dio.options = BaseOptions(
-      baseUrl: AppConstants.baseUrl,
-      connectTimeout: AppConstants.connectionTimeout,
-      receiveTimeout: AppConstants.receiveTimeout,
+      baseUrl: options.baseUrl,
+      connectTimeout: options.connectTimeout,
+      receiveTimeout: options.receiveTimeout,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -92,17 +92,17 @@ class ApiClient {
   // }
 
   /// Create a new instance with custom options
-  static ApiClient withOptions(BaseOptions options) {
-    final client = ApiClient();
-    client._dio.options = client._dio.options.copyWith(
-      baseUrl: options.baseUrl ?? client._dio.options.baseUrl,
-      connectTimeout: options.connectTimeout ?? client._dio.options.connectTimeout,
-      receiveTimeout: options.receiveTimeout ?? client._dio.options.receiveTimeout,
-      sendTimeout: options.sendTimeout ?? client._dio.options.sendTimeout,
-      headers: {...client._dio.options.headers, ...options.headers},
-    );
-    return client;
-  }
+  // static ApiClient withOptions(BaseOptions options) {
+  //   final client = ApiClient(options);
+  //   // client._dio.options = client._dio.options.copyWith(
+  //   //   baseUrl: options.baseUrl ?? client._dio.options.baseUrl,
+  //   //   connectTimeout: options.connectTimeout ?? client._dio.options.connectTimeout,
+  //   //   receiveTimeout: options.receiveTimeout ?? client._dio.options.receiveTimeout,
+  //   //   sendTimeout: options.sendTimeout ?? client._dio.options.sendTimeout,
+  //   //   headers: {...client._dio.options.headers, ...options.headers},
+  //   // );
+  //   return client;
+  // }
 
   /// GET请求
   Future<Response<T>> get<T>(

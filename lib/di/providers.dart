@@ -3,13 +3,14 @@ import 'package:sky_eldercare_family/core/network/api_client.dart';
 import 'package:sky_eldercare_family/core/network/network_info.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 
 /// Core providers for dependency injection
 /// 基础服务提供者
 class AppProviders {
   /// 网络服务提供者
   static final networkInfoProvider = Provider<NetworkInfo>((ref) {
-    return NetworkInfo();
+    return ServiceLocator.get<NetworkInfo>();
   });
 
   /// 网络状态提供者
@@ -28,12 +29,12 @@ class AppProviders {
 
   static final apiClientProvider = Provider<ApiClient>((ref) {
     AppLogger.info('Creating ApiClient instance');
-    return ApiClient();
+    return ServiceLocator.get<ApiClient>();
   });
 
   /// Storage related providers
   static final storageServiceProvider = Provider<StorageService>((ref) {
-    return StorageService.instance;
+    return ServiceLocator.get<StorageService>();
   });
 
   // /// Authentication related providers
@@ -53,19 +54,19 @@ class AppProviders {
 }
 
 /// Initialize all providers
-Future<void> initializeProviders() async {
-  try {
-    // Initialize logger
-    AppLogger.initialize();
+// Future<void> initializeProviders() async {
+//   try {
+//     // Initialize logger
+//     AppLogger.initialize();
 
-    AppLogger.info('Initializing application providers...');
+//     AppLogger.info('Initializing application providers...');
 
-    // Initialize storage service
-    await StorageService.instance.initialize();
+//     // Initialize storage service
+//     await StorageService.instance.initialize();
 
-    AppLogger.info('All providers initialized successfully');
-  } catch (e) {
-    AppLogger.error('Failed to initialize providers', error: e);
-    rethrow;
-  }
-}
+//     AppLogger.info('All providers initialized successfully');
+//   } catch (e) {
+//     AppLogger.error('Failed to initialize providers', error: e);
+//     rethrow;
+//   }
+// }

@@ -4,11 +4,10 @@ import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 
 /// Route guard for authentication and navigation control
 class RouteGuards {
-  static final StorageService _storageService = StorageService.instance;
-
   /// Main redirect logic for authentication
   static Future<String?> authRedirect(BuildContext context, GoRouterState state) async {
     final location = state.uri.path;
@@ -61,9 +60,9 @@ class RouteGuards {
       // return true;
       // final isLoggedIn = _storageService.prefs.getBool(StorageKeys.isLoggedIn) ?? false;
       // final hasToken = _storageService.hive.getUser<String>('access_token') != null;
-
+      final storageService = ServiceLocator.get<StorageService>();
       // return isLoggedIn && hasToken;
-      return await _storageService.isLoggedIn();
+      return await storageService.isLoggedIn();
     } catch (e) {
       AppLogger.error('Failed to check authentication status', error: e);
       return Future.value(false);
@@ -73,7 +72,8 @@ class RouteGuards {
   /// Check if this is first launch
   static bool _isFirstLaunch() {
     try {
-      return _storageService.prefs.getBool(StorageKeys.isFirstLaunch) ?? false;
+      final storageService = ServiceLocator.get<StorageService>();
+      return storageService.prefs.getBool(StorageKeys.isFirstLaunch) ?? false;
     } catch (e) {
       AppLogger.error('Failed to check first launch status', error: e);
       return true;
@@ -83,7 +83,8 @@ class RouteGuards {
   /// Check if onboarding is completed
   static bool _hasCompletedOnboarding() {
     try {
-      return _storageService.prefs.getBool(StorageKeys.onboardingCompleted) ?? false;
+      final storageService = ServiceLocator.get<StorageService>();
+      return storageService.prefs.getBool(StorageKeys.onboardingCompleted) ?? false;
     } catch (e) {
       AppLogger.error('Failed to check onboarding status', error: e);
       return false;
@@ -93,7 +94,8 @@ class RouteGuards {
   /// Mark first launch as completed
   static Future<void> completeFirstLaunch() async {
     try {
-      await _storageService.prefs.setBool(StorageKeys.isFirstLaunch, false);
+      final storageService = ServiceLocator.get<StorageService>();
+      await storageService.prefs.setBool(StorageKeys.isFirstLaunch, false);
       AppLogger.info('First launch completed');
     } catch (e) {
       AppLogger.error('Failed to mark first launch as completed', error: e);
@@ -103,7 +105,8 @@ class RouteGuards {
   /// Mark onboarding as completed
   static Future<void> completeOnboarding() async {
     try {
-      await _storageService.prefs.setBool(StorageKeys.onboardingCompleted, true);
+      final storageService = ServiceLocator.get<StorageService>();
+      await storageService.prefs.setBool(StorageKeys.onboardingCompleted, true);
       AppLogger.info('Onboarding completed');
     } catch (e) {
       AppLogger.error('Failed to mark onboarding as completed', error: e);

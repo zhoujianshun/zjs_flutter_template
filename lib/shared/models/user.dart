@@ -6,6 +6,21 @@ part 'user.g.dart';
 /// 用户数据模型
 @JsonSerializable()
 class User extends Equatable {
+  const User({
+    required this.id,
+    required this.email,
+    required this.createdAt,
+    this.phone,
+    this.name,
+    this.avatar,
+    this.birthday,
+    this.gender,
+    this.role = UserRole.user,
+    this.updatedAt,
+  });
+
+  /// 从JSON创建User对象
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   final String id;
   final String email;
   final String? phone;
@@ -13,25 +28,9 @@ class User extends Equatable {
   final String? avatar;
   final DateTime? birthday;
   final String? gender;
-  final UserRole role;
-  final DateTime createdAt;
+  final UserRole? role;
+  final DateTime? createdAt;
   final DateTime? updatedAt;
-
-  const User({
-    required this.id,
-    required this.email,
-    this.phone,
-    this.name,
-    this.avatar,
-    this.birthday,
-    this.gender,
-    this.role = UserRole.user,
-    required this.createdAt,
-    this.updatedAt,
-  });
-
-  /// 从JSON创建User对象
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// 转换为JSON
   Map<String, dynamic> toJson() => _$UserToJson(this);

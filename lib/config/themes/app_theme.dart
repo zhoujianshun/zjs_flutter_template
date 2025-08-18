@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 
 /// 自定义颜色扩展
 class AppColors {
@@ -721,7 +722,8 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   /// 从本地存储加载主题模式
   Future<void> _loadThemeMode() async {
     try {
-      final savedTheme = StorageService.instance.prefs.getString(themeKey);
+      final storageService = ServiceLocator.get<StorageService>();
+      final savedTheme = storageService.prefs.getString(themeKey);
       if (savedTheme != null) {
         switch (savedTheme) {
           case 'light':

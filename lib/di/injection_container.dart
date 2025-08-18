@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sky_eldercare_family/config/env/app_config.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
-import 'package:sky_eldercare_family/di/providers.dart';
 
 /// Dependency Injection Container for the application
 class InjectionContainer {
@@ -22,12 +21,6 @@ class InjectionContainer {
   static Future<void> initialize() async {
     try {
       AppLogger.info('Initializing Dependency Injection Container...');
-
-      // // Initialize flavor configuration
-      // FlavorConfig.initialize(flavor);
-
-      // // Initialize app configuration
-      // await AppConfig.initialize(environment: environment);
       AppLogger.info('AppConfig isDebug: ${AppConfig.isDebug}');
 
       // Create provider container
@@ -38,7 +31,7 @@ class InjectionContainer {
       );
 
       // Initialize core providers
-      await initializeProviders();
+      // await initializeProviders();
 
       AppLogger.info('Dependency Injection Container initialized successfully');
     } catch (e) {

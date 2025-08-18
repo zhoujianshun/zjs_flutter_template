@@ -6,14 +6,7 @@ part 'api_response.g.dart';
 /// API统一响应模型
 @JsonSerializable(genericArgumentFactories: true)
 class ApiResponse<T> extends Equatable {
-  final bool success;
-  final String message;
-  final T? data;
-  final int? code;
-  final String? timestamp;
-
   const ApiResponse({
-    required this.success,
     required this.message,
     this.data,
     this.code,
@@ -27,10 +20,6 @@ class ApiResponse<T> extends Equatable {
   ) =>
       _$ApiResponseFromJson(json, fromJsonT);
 
-  /// 转换为JSON
-  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
-      _$ApiResponseToJson(this, toJsonT);
-
   /// 创建成功响应
   factory ApiResponse.success({
     required T data,
@@ -39,7 +28,6 @@ class ApiResponse<T> extends Equatable {
     String? timestamp,
   }) {
     return ApiResponse<T>(
-      success: true,
       message: message,
       data: data,
       code: code ?? 200,
@@ -55,43 +43,42 @@ class ApiResponse<T> extends Equatable {
     T? data,
   }) {
     return ApiResponse<T>(
-      success: false,
       message: message,
       data: data,
       code: code ?? 400,
       timestamp: timestamp ?? DateTime.now().toIso8601String(),
     );
   }
+  // final bool success;
+  final String message;
+  final T? data;
+  final int? code;
+  final String? timestamp;
+
+  /// 转换为JSON
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) => _$ApiResponseToJson(this, toJsonT);
 
   /// 是否成功
-  bool get isSuccess => success;
+  bool get isSuccess => code == 200 || code == 0;
 
   /// 是否失败
-  bool get isFailure => !success;
+  bool get isFailure => code != 200 && code != 0;
 
   /// 是否有数据
   bool get hasData => data != null;
 
   @override
-  List<Object?> get props => [success, message, data, code, timestamp];
+  List<Object?> get props => [isSuccess, message, data, code, timestamp];
 
   @override
   String toString() {
-    return 'ApiResponse(success: $success, message: $message, data: $data, code: $code)';
+    return 'ApiResponse(isSuccess: $isSuccess, message: $message, data: $data, code: $code)';
   }
 }
 
 /// 分页数据模型
 @JsonSerializable(genericArgumentFactories: true)
 class PageData<T> extends Equatable {
-  final List<T> items;
-  final int total;
-  final int page;
-  final int pageSize;
-  final int totalPages;
-  final bool hasNextPage;
-  final bool hasPreviousPage;
-
   const PageData({
     required this.items,
     required this.total,
@@ -109,17 +96,13 @@ class PageData<T> extends Equatable {
   ) =>
       _$PageDataFromJson(json, fromJsonT);
 
-  /// 转换为JSON
-  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
-      _$PageDataToJson(this, toJsonT);
-
   /// 创建空的分页数据
   factory PageData.empty({
     int page = 1,
     int pageSize = 20,
   }) {
     return PageData<T>(
-      items: [],
+      items: const [],
       total: 0,
       page: page,
       pageSize: pageSize,
@@ -128,6 +111,16 @@ class PageData<T> extends Equatable {
       hasPreviousPage: false,
     );
   }
+  final List<T> items;
+  final int total;
+  final int page;
+  final int pageSize;
+  final int totalPages;
+  final bool hasNextPage;
+  final bool hasPreviousPage;
+
+  /// 转换为JSON
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) => _$PageDataToJson(this, toJsonT);
 
   /// 是否为空
   bool get isEmpty => items.isEmpty;

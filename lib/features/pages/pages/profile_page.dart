@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sky_eldercare_family/config/routes/route_paths.dart';
 import 'package:sky_eldercare_family/config/themes/app_theme.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 import 'package:sky_eldercare_family/examples/dark_mode_examples.dart';
 import 'package:sky_eldercare_family/examples/dartz_examples_page.dart';
 import 'package:sky_eldercare_family/examples/responsive_examples.dart';
@@ -32,7 +33,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   /// 加载用户信息
   Future<void> _loadUserInfo() async {
-    final email = StorageService.instance.getUserData<String>('user_email');
+    final storageService = ServiceLocator.get<StorageService>();
+    final email = storageService.getUserData<String>('user_email');
     if (email != null) {
       setState(() {
         _userEmail = email;
@@ -43,9 +45,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   /// 退出登录
   Future<void> _handleLogout() async {
     final confirmed = await _showLogoutDialog();
-    if (confirmed == true) {
-      await StorageService.instance.removeUserToken();
-      await StorageService.instance.clearUserData();
+    if (confirmed ?? false) {
+      final storageService = ServiceLocator.get<StorageService>();
+      await storageService.removeUserToken();
+      await storageService.clearUserData();
 
       if (!mounted) return;
       // context.go(AppConstants.loginRoute);

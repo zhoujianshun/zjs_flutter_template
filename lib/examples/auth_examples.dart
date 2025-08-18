@@ -46,7 +46,7 @@ class _AuthExamplesPageState extends ConsumerState<AuthExamplesPage> {
           children: [
             // 状态显示卡片
             _AuthStateCard(authState: authState),
-            
+
             const SizedBox(height: 16),
 
             if (!authState.isAuthenticated) ...[
@@ -57,9 +57,9 @@ class _AuthExamplesPageState extends ConsumerState<AuthExamplesPage> {
                 onLogin: _handleLogin,
                 isLoading: authState.isLoading,
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // 注册表单
               _RegisterForm(
                 emailController: _emailController,
@@ -71,9 +71,9 @@ class _AuthExamplesPageState extends ConsumerState<AuthExamplesPage> {
             ] else ...[
               // 用户信息和操作
               _UserInfoCard(user: authState.user),
-              
+
               const SizedBox(height: 16),
-              
+
               // 其他操作
               _AuthActionsCard(),
             ],
@@ -235,9 +235,7 @@ class _LoginForm extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: isLoading ? null : onLogin,
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('登录'),
+              child: isLoading ? const CircularProgressIndicator() : const Text('登录'),
             ),
           ],
         ),
@@ -302,9 +300,7 @@ class _RegisterForm extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: isLoading ? null : onRegister,
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('注册'),
+              child: isLoading ? const CircularProgressIndicator() : const Text('注册'),
             ),
           ],
         ),
@@ -334,10 +330,10 @@ class _UserInfoCard extends StatelessWidget {
             const SizedBox(height: 16),
             ListTile(
               leading: CircleAvatar(
-                child: Text(user.avatarInitial),
+                child: Text(user.avatarInitial as String),
               ),
-              title: Text(user.displayName),
-              subtitle: Text(user.email),
+              title: Text(user.displayName as String),
+              subtitle: Text(user.email as String),
             ),
             const Divider(),
             Text('ID: ${user.id}'),

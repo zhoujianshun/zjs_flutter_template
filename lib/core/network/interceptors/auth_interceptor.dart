@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
 import 'package:sky_eldercare_family/core/utils/logger.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 
 /// Authentication interceptor for adding tokens to requests
 class AuthInterceptor extends Interceptor {
-  final _secureStorage = StorageService.instance;
-
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
@@ -13,8 +12,8 @@ class AuthInterceptor extends Interceptor {
       if (_shouldSkipAuth(options.path)) {
         return handler.next(options);
       }
-
-      final token = await _secureStorage.getUserToken();
+      final storageService = ServiceLocator.get<StorageService>();
+      final token = await storageService.getUserToken();
 
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
@@ -82,7 +81,8 @@ class AuthInterceptor extends Interceptor {
   /// Refresh access token using refresh token
   Future<bool> _refreshToken() async {
     try {
-      final refreshToken = await _secureStorage.secure.read('refresh_token');
+      final storageService = ServiceLocator.get<StorageService>();
+      final refreshToken = await storageService.secure.read('refresh_token');
 
       if (refreshToken == null || refreshToken.isEmpty) {
         AppLogger.warning('No refresh token available');
@@ -104,12 +104,14 @@ class AuthInterceptor extends Interceptor {
         final newRefreshToken = data['refresh_token'] as String?;
 
         if (newAccessToken != null) {
-          await _secureStorage.setUserToken(newAccessToken);
+          final storageService = ServiceLocator.get<StorageService>();
+          await storageService.setUserToken(newAccessToken);
           AppLogger.info('Access token refreshed successfully');
         }
 
         if (newRefreshToken != null) {
-          await _secureStorage.secure.write('refresh_token', newRefreshToken);
+          final storageService = ServiceLocator.get<StorageService>();
+          await storageService.secure.write('refresh_token', newRefreshToken);
         }
 
         return true;
@@ -124,8 +126,9 @@ class AuthInterceptor extends Interceptor {
 
   /// Clear all stored tokens
   Future<void> _clearTokens() async {
-    await _secureStorage.removeUserToken();
-    await _secureStorage.clearUserData();
+    final storageService = ServiceLocator.get<StorageService>();
+    await storageService.removeUserToken();
+    await storageService.clearUserData();
     AppLogger.info('Cleared stored tokens');
 
     // 使用 go_router 跳转到登录页面

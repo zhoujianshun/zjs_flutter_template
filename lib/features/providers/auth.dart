@@ -1,11 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sky_eldercare_family/di/providers.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 import 'package:sky_eldercare_family/shared/models/auth_models.dart';
 import 'package:sky_eldercare_family/shared/models/user.dart';
 import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
-import 'package:sky_eldercare_family/shared/repositories/auth_repository_impl.dart';
-import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 part 'auth.freezed.dart';
 part 'auth.g.dart';
@@ -21,7 +19,7 @@ enum AuthStatus {
 
 /// 认证状态模型
 @freezed
-class AuthState with _$AuthState {
+abstract class AuthState with _$AuthState {
   const factory AuthState({
     @Default(AuthStatus.initial) AuthStatus status,
     User? user,
@@ -73,7 +71,7 @@ class Auth extends _$Auth {
 
   /// 初始化认证状态
   Future<void> _initializeAuth() async {
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
 
     final result = await authRepository.getLocalAuthInfo();
     result.fold(
@@ -120,7 +118,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.login(request);
 
     result.fold(
@@ -154,7 +152,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.phoneLogin(request);
 
     result.fold(
@@ -188,7 +186,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.register(request);
 
     result.fold(
@@ -217,7 +215,7 @@ class Auth extends _$Auth {
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     await authRepository.logout();
 
     // 无论服务器登出是否成功，都要清除本地状态
@@ -236,7 +234,7 @@ class Auth extends _$Auth {
       return;
     }
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final request = RefreshTokenRequest(refreshToken: state.refreshToken!);
     final result = await authRepository.refreshToken(request);
 
@@ -272,7 +270,7 @@ class Auth extends _$Auth {
 
     state = state.copyWith(isLoading: true);
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.updateUser(user);
 
     result.fold(
@@ -299,7 +297,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.resetPassword(request);
 
     result.fold(
@@ -325,7 +323,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.changePassword(request);
 
     result.fold(
@@ -351,7 +349,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.sendVerificationCode(request);
 
     result.fold(
@@ -377,7 +375,7 @@ class Auth extends _$Auth {
       errorMessage: null,
     );
 
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = sl<AuthRepository>();
     final result = await authRepository.verifyCode(request);
 
     result.fold(
@@ -407,14 +405,4 @@ class Auth extends _$Auth {
   }
 }
 
-/// Auth Repository Provider
-@riverpod
-AuthRepository authRepository(AuthRepositoryRef ref) {
-  final userService = ref.read(userServiceProvider);
-  final storageService = ref.read(AppProviders.storageServiceProvider);
-
-  return AuthRepositoryImpl(
-    userService: userService,
-    storageService: storageService,
-  );
-}
+// AuthRepository现在通过GetIt管理，不再需要Riverpod provider

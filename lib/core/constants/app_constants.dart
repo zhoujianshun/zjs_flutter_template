@@ -3,7 +3,7 @@ class AppConstants {
   AppConstants._();
 
   // API配置
-  static const String baseUrl = 'https://api.example.com';
+  static const String baseUrl = 'https://m1.apifoxmock.com/m1/6726754-6437921-default/api';
   static const Duration connectionTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
 

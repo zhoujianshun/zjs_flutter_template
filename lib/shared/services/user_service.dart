@@ -1,10 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sky_eldercare_family/core/errors/error_utils.dart';
 import 'package:sky_eldercare_family/core/errors/exceptions.dart';
 import 'package:sky_eldercare_family/core/errors/failures.dart';
 import 'package:sky_eldercare_family/core/network/api_client.dart';
-import 'package:sky_eldercare_family/di/providers.dart';
+// import 'package:sky_eldercare_family/di/providers.dart';
+import 'package:sky_eldercare_family/di/service_locator.dart';
 import 'package:sky_eldercare_family/shared/models/api_response.dart';
 import 'package:sky_eldercare_family/shared/models/auth_models.dart';
 import 'package:sky_eldercare_family/shared/models/user.dart';
@@ -57,6 +59,7 @@ abstract class UserService {
 }
 
 /// 用户服务实现
+@Singleton(as: UserService)
 class UserServiceImpl implements UserService {
   UserServiceImpl(this._apiClient);
   final ApiClient _apiClient;
@@ -68,7 +71,7 @@ class UserServiceImpl implements UserService {
   }) async {
     try {
       final response = await _apiClient.post(
-        '/auth/login',
+        '/login',
         data: {
           'email': email,
           'password': password,
@@ -306,15 +309,14 @@ class UserServiceImpl implements UserService {
   }
 }
 
-/// 用户服务提供者
-final userServiceProvider = Provider<UserService>((ref) {
-  final apiClient = ref.watch(AppProviders.apiClientProvider);
-  return UserServiceImpl(apiClient);
-});
+// UserService现在通过GetIt管理，不再需要Riverpod provider
+// 如果需要在UI中使用，可以通过以下方式获取：
+// final userService = sl<UserService>();
 
-/// 当前用户提供者
+/// 当前用户提供者 - 保留用于UI状态管理
 final currentUserProvider = FutureProvider<User?>((ref) async {
-  final userService = ref.watch(userServiceProvider);
+  // 使用GetIt获取UserService实例
+  final userService = sl<UserService>();
   final result = await userService.getCurrentUser();
 
   return result.fold(

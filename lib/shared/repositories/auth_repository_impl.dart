@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sky_eldercare_family/core/constants/storage_keys.dart';
 import 'package:sky_eldercare_family/core/errors/failures.dart';
 import 'package:sky_eldercare_family/core/storage/storage_service.dart';
@@ -8,6 +9,7 @@ import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
 import 'package:sky_eldercare_family/shared/services/user_service.dart';
 
 /// 认证仓库实现
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({
     required UserService userService,

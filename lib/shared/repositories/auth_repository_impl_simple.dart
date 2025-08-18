@@ -8,8 +8,8 @@ import 'package:sky_eldercare_family/shared/models/user.dart';
 import 'package:sky_eldercare_family/shared/repositories/auth_repository.dart';
 
 /// 认证仓库实现（简化版本，用于演示）
-class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({
+class AuthRepositoryImplSimple implements AuthRepository {
+  AuthRepositoryImplSimple({
     required ApiClient apiClient,
     required StorageService storageService,
   })  : _apiClient = apiClient,
@@ -268,5 +268,11 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       return Left(CacheFailure(message: '清除认证信息失败: $e'));
     }
+  }
+
+  @override
+  Future<Either<Failure, AuthResponse>> phoneLogin(PhoneLoginRequest request) {
+    // TODO: implement phoneLogin
+    throw UnimplementedError();
   }
 }
