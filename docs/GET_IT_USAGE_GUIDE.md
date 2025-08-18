@@ -42,15 +42,20 @@
 ```dart
 import 'package:sky_eldercare_family/di/service_locator.dart';
 
-// 直接获取服务
-final userService = sl<UserService>();
-final authRepository = sl<AuthRepository>();
-final apiClient = sl<ApiClient>();
+// 推荐方式：使用 getIt<T>() 函数
+final userService = getIt<UserService>();
+final authRepository = getIt<AuthRepository>();
+final apiClient = getIt<ApiClient>();
 
 // 使用扩展方法（更简洁）
-final userService = getIt.userService;
-final authRepository = getIt.authRepository;
-final apiClient = getIt.apiClient;
+final userService = sl.userService;
+final authRepository = sl.authRepository;
+final apiClient = sl.apiClient;
+
+// 使用 ServiceLocator 静态方法（封装接口）
+final userService = ServiceLocator.get<UserService>();
+final authRepository = ServiceLocator.get<AuthRepository>();
+final apiClient = ServiceLocator.get<ApiClient>();
 ```
 
 ### 2. 在Widget中使用
@@ -60,7 +65,7 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 直接获取服务，无需WidgetRef
-    final userService = sl<UserService>();
+    final userService = getIt<UserService>();
     
     return FutureBuilder(
       future: userService.getCurrentUser().then(
@@ -85,8 +90,8 @@ class ProfileWidget extends StatelessWidget {
 ```dart
 class OrderService {
   OrderService() 
-    : _userService = sl<UserService>(),
-      _authRepository = sl<AuthRepository>();
+    : _userService = getIt<UserService>(),
+      _authRepository = getIt<AuthRepository>();
 
   final UserService _userService;
   final AuthRepository _authRepository;

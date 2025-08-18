@@ -77,9 +77,9 @@ void main() {
 
     test('should use extension methods correctly', () {
       // 测试扩展方法
-      expect(getIt.apiClient, isNotNull);
-      expect(getIt.userService, isNotNull);
-      expect(getIt.networkInfo, isNotNull);
+      expect(sl.apiClient, isNotNull);
+      expect(sl.userService, isNotNull);
+      expect(sl.networkInfo, isNotNull);
     });
   });
 }
