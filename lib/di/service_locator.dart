@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:zjs_flutter_template/config/env/app_config.dart';
 import 'package:zjs_flutter_template/core/constants/app_constants.dart';
 import 'package:zjs_flutter_template/core/network/api_client.dart';
 import 'package:zjs_flutter_template/core/network/network_info.dart';
@@ -32,7 +33,7 @@ abstract class RegisterModule {
   @singleton
   ApiClient get apiClient => ApiClient(
         BaseOptions(
-          baseUrl: AppConstants.baseUrl,
+          baseUrl: AppConfig.baseUrl,
           connectTimeout: AppConstants.connectionTimeout,
           receiveTimeout: AppConstants.receiveTimeout,
         ),

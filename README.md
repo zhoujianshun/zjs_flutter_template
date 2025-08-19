@@ -351,6 +351,9 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - [Freezed 迁移指南](docs/FREEZED_MIGRATION_GUIDE.md) - 从 Equatable 到 Freezed 的完整迁移指南
 - [架构改进文档](lib/docs/ARCHITECTURE_IMPROVEMENT.md) - 项目架构改进说明
 - [认证使用指南](lib/docs/AUTH_USAGE_GUIDE.md) - 认证系统使用说明
+- [优化建议报告](docs/OPTIMIZATION_RECOMMENDATIONS.md) - 项目优化分析和改进建议
+- [依赖更新指南](docs/DEPENDENCY_UPDATE_GUIDE.md) - 依赖版本更新和维护指南
+- [CI/CD配置指南](docs/CI_CD_SETUP_GUIDE.md) - 持续集成和部署配置
 
 ### 代码示例
 

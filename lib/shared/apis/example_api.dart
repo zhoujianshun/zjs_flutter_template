@@ -80,7 +80,7 @@ class ExampleAPI extends BaseAPI {
   Future<Either<Failure, List<Either<Failure, ExampleModel>>>> batchCreateExamples(
     List<CreateExampleRequest> requests,
   ) async {
-    final response = await apiClient.post(
+    final response = await apiClient.post<Map<String, dynamic>>(
       '/examples/batch',
       data: {'items': requests.map((r) => r.toJson()).toList()},
     );

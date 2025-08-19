@@ -8,9 +8,9 @@ class HiveService {
   static const String _settingsBoxName = 'settings_box';
   static const String _cacheBoxName = 'cache_box';
 
-  Box? _userBox;
-  Box? _settingsBox;
-  Box? _cacheBox;
+  Box<dynamic>? _userBox;
+  Box<dynamic>? _settingsBox;
+  Box<dynamic>? _cacheBox;
 
   static bool _initialized = false;
 
@@ -38,7 +38,7 @@ class HiveService {
   }
 
   /// Get user data box
-  Box get userBox {
+  Box<dynamic> get userBox {
     if (_userBox == null || !_userBox!.isOpen) {
       throw const StorageException(message: 'User box is not initialized or closed');
     }
@@ -46,7 +46,7 @@ class HiveService {
   }
 
   /// Get settings box
-  Box get settingsBox {
+  Box<dynamic> get settingsBox {
     if (_settingsBox == null || !_settingsBox!.isOpen) {
       throw const StorageException(message: 'Settings box is not initialized or closed');
     }
@@ -54,7 +54,7 @@ class HiveService {
   }
 
   /// Get cache box
-  Box get cacheBox {
+  Box<dynamic> get cacheBox {
     if (_cacheBox == null || !_cacheBox!.isOpen) {
       throw const StorageException(message: 'Cache box is not initialized or closed');
     }
@@ -164,7 +164,7 @@ class HiveService {
   }
 
   /// Get box by name (async)
-  Future<Box> _getBox(String boxName) async {
+  Future<Box<dynamic>> _getBox(String boxName) async {
     switch (boxName) {
       case _userBoxName:
         return _userBox ?? await Hive.openBox(_userBoxName);
