@@ -11,6 +11,18 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:zjs_flutter_template/core/monitoring/interfaces/analytics_interface.dart'
+    as _i849;
+import 'package:zjs_flutter_template/core/monitoring/interfaces/error_monitor_interface.dart'
+    as _i451;
+import 'package:zjs_flutter_template/core/monitoring/interfaces/performance_monitor_interface.dart'
+    as _i740;
+import 'package:zjs_flutter_template/core/monitoring/mock_analytics_service.dart'
+    as _i725;
+import 'package:zjs_flutter_template/core/monitoring/mock_error_monitor.dart'
+    as _i140;
+import 'package:zjs_flutter_template/core/monitoring/mock_performance_monitor.dart'
+    as _i785;
 import 'package:zjs_flutter_template/core/network/api_client.dart' as _i742;
 import 'package:zjs_flutter_template/core/network/base_api.dart' as _i158;
 import 'package:zjs_flutter_template/core/network/network_info.dart' as _i814;
@@ -40,10 +52,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i742.ApiClient>(() => registerModule.apiClient);
     gh.singleton<_i814.NetworkInfo>(() => _i814.NetworkInfo());
+    gh.singleton<_i740.IPerformanceMonitor>(
+        () => _i785.MockPerformanceMonitor());
+    gh.singleton<_i451.IErrorMonitor>(() => _i140.MockErrorMonitor());
     gh.factory<_i884.CreateExampleRequest>(() => _i884.CreateExampleRequest(
           name: gh<String>(),
           description: gh<String>(),
         ));
+    gh.singleton<_i849.IAnalyticsService>(() => _i725.MockAnalyticsService());
     gh.factory<_i884.UpdateExampleRequest>(() => _i884.UpdateExampleRequest(
           name: gh<String>(),
           description: gh<String>(),

@@ -354,6 +354,11 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - [优化建议报告](docs/OPTIMIZATION_RECOMMENDATIONS.md) - 项目优化分析和改进建议
 - [依赖更新指南](docs/DEPENDENCY_UPDATE_GUIDE.md) - 依赖版本更新和维护指南
 - [CI/CD配置指南](docs/CI_CD_SETUP_GUIDE.md) - 持续集成和部署配置
+- [监控接入指南](docs/MONITORING_INTEGRATION_GUIDE.md) - 如何接入真实监控平台
+- [Firebase vs Sentry对比](docs/FIREBASE_VS_SENTRY_COMPARISON.md) - 监控平台选择指南
+- [监控系统指南](docs/MONITORING_SYSTEM_GUIDE.md) - 完整监控系统设计文档
+- [全局异常捕获指南](docs/GLOBAL_ERROR_HANDLING_GUIDE.md) - 异常捕获和错误恢复完整指南
+- [平台通道错误处理指南](docs/PLATFORM_CHANNEL_ERROR_HANDLING.md) - 现代API方式处理平台通道错误
 
 ### 代码示例
 
@@ -364,6 +369,9 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - [响应式设计示例](lib/examples/responsive_examples.dart) - 屏幕适配示例
 - [主题使用示例](lib/examples/theme_usage_examples.dart) - 主题切换示例
 - [深色模式示例](lib/examples/dark_mode_examples.dart) - 深色模式实现示例
+- [监控系统示例](lib/examples/simple_monitoring_examples.dart) - 监控接口使用示例和演示
+- [全局异常捕获示例](lib/examples/global_error_examples.dart) - 异常捕获和恢复机制演示
+- [监控配置页面](lib/examples/monitoring_config_page.dart) - 监控平台对比和配置说明
 
 ## 🛠️ 开发指南
 
@@ -418,6 +426,12 @@ feature_name/
 - 🌐 **国际化** - 中英文双语支持
 - 🎨 **主题系统** - Material 3 浅色/深色主题
 - 📝 **日志监控** - Talker 高级日志和错误追踪
+- 🔌 **监控接口** - 完整的监控接口设计，支持多平台接入
+- 🧪 **模拟监控** - 开发阶段使用模拟服务，便于调试和测试
+- 📊 **监控预留** - 预留Firebase、Sentry等主流监控平台接入能力
+- 🚨 **全局异常捕获** - 自动捕获Flutter、Dart、Zone、Isolate等所有异常
+- 🔄 **错误恢复机制** - 重试、降级、断路器等多种错误恢复策略
+- 📞 **平台通道错误处理** - 现代API方式处理原生平台通信错误
 - 🧪 **完整测试** - 单元/Widget/集成测试覆盖
 
 ## 🐛 故障排除

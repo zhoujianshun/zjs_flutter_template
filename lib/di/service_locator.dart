@@ -3,6 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:zjs_flutter_template/config/env/app_config.dart';
 import 'package:zjs_flutter_template/core/constants/app_constants.dart';
+import 'package:zjs_flutter_template/core/monitoring/interfaces/analytics_interface.dart';
+import 'package:zjs_flutter_template/core/monitoring/interfaces/error_monitor_interface.dart';
+import 'package:zjs_flutter_template/core/monitoring/interfaces/performance_monitor_interface.dart';
 import 'package:zjs_flutter_template/core/network/api_client.dart';
 import 'package:zjs_flutter_template/core/network/network_info.dart';
 import 'package:zjs_flutter_template/core/storage/storage_service.dart';
@@ -89,6 +92,15 @@ extension GetItExtensions on GetIt {
 
   /// 快速获取用户服务
   UserService get userService => get<UserService>();
+
+  /// 快速获取错误监控
+  IErrorMonitor get errorMonitor => get<IErrorMonitor>();
+
+  /// 快速获取分析服务
+  IAnalyticsService get analyticsService => get<IAnalyticsService>();
+
+  /// 快速获取性能监控
+  IPerformanceMonitor get performanceMonitor => get<IPerformanceMonitor>();
 }
 
 /// 全局快捷访问方式

@@ -4,20 +4,37 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zjs_flutter_template/config/language/app_language.dart';
 import 'package:zjs_flutter_template/config/routes/app_router.dart';
 import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/core/error_handling/global_error_handler.dart';
+import 'package:zjs_flutter_template/core/monitoring/simple_monitoring_manager.dart';
 import 'package:zjs_flutter_template/di/service_locator.dart';
 import 'package:zjs_flutter_template/generated/l10n/app_localizations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // 初始化GetIt依赖注入容器
-  await ServiceLocator.initialize();
-
-  runApp(
+  // 在错误隔离Zone中运行整个应用初始化过程
+  GlobalErrorHandler.instance.runAppInErrorZone(
     const ProviderScope(
       child: MyApp(),
     ),
+    onInitialize: _initializeApp,
   );
+}
+
+Future<void> _initializeApp() async {
+  // 初始化GetIt依赖注入容器
+  await ServiceLocator.initialize();
+
+  // 初始化监控系统
+  await SimpleMonitoringManager.instance.initialize();
+
+  // 设置全局错误处理器的监控回调
+  GlobalErrorHandler.setMonitoringCallback((error, stackTrace, {context, extra}) {
+    SimpleMonitoringManager.instance.reportError(
+      error,
+      stackTrace,
+      context: context,
+      extra: extra,
+    );
+  });
 }
 
 class MyApp extends ConsumerWidget {
