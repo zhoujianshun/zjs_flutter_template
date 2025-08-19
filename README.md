@@ -359,6 +359,7 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - [监控系统指南](docs/MONITORING_SYSTEM_GUIDE.md) - 完整监控系统设计文档
 - [全局异常捕获指南](docs/GLOBAL_ERROR_HANDLING_GUIDE.md) - 异常捕获和错误恢复完整指南
 - [平台通道错误处理指南](docs/PLATFORM_CHANNEL_ERROR_HANDLING.md) - 现代API方式处理平台通道错误
+- [RouteUtil 路由导航指南](docs/ROUTE_UTIL_GUIDE.md) - 路由导航工具类完整使用指南
 
 ### 代码示例
 
@@ -371,7 +372,7 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 - [深色模式示例](lib/examples/dark_mode_examples.dart) - 深色模式实现示例
 - [监控系统示例](lib/examples/simple_monitoring_examples.dart) - 监控接口使用示例和演示
 - [全局异常捕获示例](lib/examples/global_error_examples.dart) - 异常捕获和恢复机制演示
-- [监控配置页面](lib/examples/monitoring_config_page.dart) - 监控平台对比和配置说明
+- [RouteUtil 使用示例](lib/examples/route_util_examples.dart) - 路由导航工具类完整使用示例
 
 ## 🛠️ 开发指南
 
@@ -432,6 +433,7 @@ feature_name/
 - 🚨 **全局异常捕获** - 自动捕获Flutter、Dart、Zone、Isolate等所有异常
 - 🔄 **错误恢复机制** - 重试、降级、断路器等多种错误恢复策略
 - 📞 **平台通道错误处理** - 现代API方式处理原生平台通信错误
+- 🧭 **路由导航工具** - RouteUtil统一封装，提供丰富的导航方法和错误处理
 - 🧪 **完整测试** - 单元/Widget/集成测试覆盖
 
 ## 🐛 故障排除

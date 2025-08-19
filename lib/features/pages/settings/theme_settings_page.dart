@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zjs_flutter_template/config/themes/app_theme.dart';
+import 'package:zjs_flutter_template/core/utils/route_util.dart';
 import 'package:zjs_flutter_template/shared/widgets/theme_switcher.dart';
 
 /// 主题设置页面
@@ -15,10 +16,18 @@ class ThemeSettingsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('主题设置'),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () => context.pop(),
-        // ),
+        leading: const IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: RouteUtil.pop,
+          tooltip: '返回',
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => RouteUtil.showInfoMessage('这是使用RouteUtil显示的消息'),
+            tooltip: '信息',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -213,15 +222,128 @@ class ThemeSettingsPage extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 12),
-                  const ElevatedButton(
-                    onPressed: null,
-                    child: Text('示例按钮'),
+                  ElevatedButton(
+                    onPressed: () => _showRouteUtilDemo(context),
+                    child: const Text('RouteUtil演示'),
                   ),
                 ],
               ),
             ),
+
+            // RouteUtil 演示区域
+            const SizedBox(height: 24),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'RouteUtil 导航演示',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 16),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: RouteUtil.goHome,
+                          icon: const Icon(Icons.home, size: 16),
+                          label: const Text('首页'),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: RouteUtil.goProfile,
+                          icon: const Icon(Icons.person, size: 16),
+                          label: const Text('个人资料'),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: RouteUtil.goLanguageSettings,
+                          icon: const Icon(Icons.language, size: 16),
+                          label: const Text('语言设置'),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () => context.showSuccess('使用扩展方法显示成功消息！'),
+                          icon: const Icon(Icons.check_circle, size: 16),
+                          label: const Text('成功消息'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// 显示RouteUtil功能演示对话框
+  void _showRouteUtilDemo(BuildContext context) {
+    RouteUtil.showModalDialog<void>(
+      builder: (context) => AlertDialog(
+        title: const Text('RouteUtil 功能演示'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('当前路由信息:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text('路径: ${RouteUtil.currentPath}'),
+              Text('名称: ${RouteUtil.currentRouteName}'),
+              Text('需要认证: ${RouteUtil.currentRouteRequiresAuth}'),
+              Text('可以返回: ${RouteUtil.canPop()}'),
+              const SizedBox(height: 16),
+              const Text('功能演示:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      RouteUtil.showSuccessMessage('演示：成功消息');
+                    },
+                    child: const Text('成功消息'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      RouteUtil.showErrorMessage('演示：错误消息');
+                    },
+                    child: const Text('错误消息'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      RouteUtil.showWarningMessage('演示：警告消息');
+                    },
+                    child: const Text('警告消息'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('关闭'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // 导航到RouteUtil示例页面
+              RouteUtil.push('/examples/route_util');
+            },
+            child: const Text('查看完整示例'),
+          ),
+        ],
       ),
     );
   }

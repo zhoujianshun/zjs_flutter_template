@@ -7,10 +7,11 @@ class RoutePaths {
   static const String onboarding = '/onboarding';
 
   // Authentication routes
-  static const String login = '/login';
-  static const String register = '/register';
-  static const String forgotPassword = '/forgot-password';
-  static const String resetPassword = '/reset-password';
+  static const String authBase = '/auth';
+  static const String login = '$authBase/login';
+  static const String register = '$authBase/register';
+  static const String forgotPassword = '$authBase/forgot-password';
+  static const String resetPassword = '$authBase/reset-password';
 
   // Main application routes
   static const String home = '/home';
@@ -34,7 +35,7 @@ class RoutePaths {
   static const String notFound = '/404';
   static const String error = '/error';
 
-  static const publicRoutes = [
+  static const List<String> publicRoutes = [
     splash,
     onboarding,
     login,
@@ -96,6 +97,11 @@ class RoutePaths {
   /// Check if route requires authentication
   static bool requiresAuth(String path) {
     return !publicRoutes.contains(path);
+  }
+
+  /// Check if route is authentication route
+  static bool isAuthRoute(String path) {
+    return path.startsWith(authBase);
   }
 
   /// Check if route is public (doesn't require auth)

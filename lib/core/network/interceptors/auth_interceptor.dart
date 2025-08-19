@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:zjs_flutter_template/core/storage/storage_service.dart';
 import 'package:zjs_flutter_template/core/utils/logger.dart';
+import 'package:zjs_flutter_template/core/utils/route_util.dart';
 import 'package:zjs_flutter_template/di/service_locator.dart';
 
 /// Authentication interceptor for adding tokens to requests
@@ -33,6 +34,9 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 401 && !_isRefreshRequest(err.requestOptions.path)) {
       // 这里可以添加跳转到登录页面的逻辑
       await _clearTokens();
+      // 跳转到登录页面
+      // 使用 go_router 跳转到登录页面
+      RouteUtil.goLogin();
 
       // 不需要刷新token
       // try {
